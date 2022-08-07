@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- The HTML markup is based on the main page of Tasmota -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>Owie - Status</title>
+    <link rel="stylesheet" href="/stylesheets/solid.css">
+    <link rel="stylesheet" href="/stylesheets/fontawesome.css">
+    <link rel="stylesheet" href="/stylesheets/picnic.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="js/owie.js"></script>
+</head>
+<body class="owie-app">
+<div class="main">
+    <div class="toaster" id="toaster">
+        <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
+        <div id="alert-msg" style='text-align:center'></div>
+    </div>
+    <div class="battery-overlay">
+        Here comes the Battery Compartent!
+        Stay Tuned!
+    </div>
+    <div id="nav" class="nav">
+        <div class="nav-content">
+            <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>
+            <a href="#" onClick="openBatteryOverlay()">
+                <i class="fa-solid fa-battery-full"></i>
+            <span class="menu-text">Battery Information</span>
+            </a>
+            <a href="/settings"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>
+            <a href="/wifi"><i class="fa-solid fa-wifi"></i> <span class="menu-text">Wifi Configuration</span></a>
+            <a href="/monitor"><i class="fa-solid fa-terminal"></i> <span class="menu-text">Monitor BMS data</span></a>
+            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>
+            <span class="owie-version">v1.4.0</span>
+        </div>
+    </div>
+    <div class="header top two">
+        <div class="owie-name">
+            Owie-12345
+        </div>
+        <div class="menu" onclick="navOpen('1')">&#9776;</div>
+    </div>
+    <div class="owie-loading-bars">
+        <!-- check if other possibilities... -->
+        <div class="progress owie">
+            <div class="progress-text flex">
+                <div class="loading-name">Owie</div>
+                <div class="loading-percentage">61%</div>
+                <div class="loading-icon">
+                    <svg viewBox="0 0 576 512">
+                        <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
+                    </svg>
+                </div>
+                <div class="loading-icon hidden">
+                    <svg viewBox="0 0 384 512">
+                        <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="progress__bar" style="width: 61%"></div>
+        </div>
+        <div class="loading-spacer"></div>
+        <div class="progress bms">
+            <div class="progress-text flex">
+                <div class="loading-name">BMS</div>
+                <div class="loading-percentage">69%</div>
+                <div class="loading-icon hidden">
+                    <svg viewBox="0 0 576 512">
+                        <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
+                    </svg>
+                </div>
+                <div class="loading-icon">
+                    <svg viewBox="0 0 384 512">
+                        <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="progress__bar" style="width: 69%"></div>
+        </div>
+    </div>
+    <div class="owie-current">
+<!--        <div class="current-icon"><i class="fa-solid fa-bolt"></i></div>-->
+        <div class="current-content flex">
+            <div>
+
+                <div class="current-gauge">
+                    <div class="progress-gauge regen">
+                        <div class="barOverflow">
+                            <div class="bar" style="transform: rotate(355deg)"></div>
+                        </div>
+                    </div>
+                    <div class="gauge-separator"></div>
+                    <div class="progress-gauge current">
+                        <div class="barOverflow">
+                            <div class="bar" style="transform: rotate(355deg)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: -45px;">
+                    <div class="value-text" >5.02 <span class="owie-label value-label"> A</span>
+                    </div>
+                    <div class="current-header"><span class="owie-label">CURRENT</span></div>
+                </div>
+
+
+            </div>
+            <div class="voltage">
+
+                <div class="voltage-text">
+                    <span class="value-text">60.03</span><span class="owie-label value-label"> V</span>
+
+                </div>
+                <div class="current-header"><span class="owie-label">VOLTAGE</span></div>
+            </div>
+
+        </div>
+
+    </div>
+    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+    <div class="session-statistics header"><i class="fa-solid fa-chart-line"></i>&nbsp;SESSION STATISTICS</div>
+    <div class="usage-statistics flex">
+        <div class="uptime">
+            <div class="statistics-header"><span class="owie-label">UPTIME</span></div>
+            <div class="statistics-text">
+                <span class="value-text">2:23:23</span>
+            </div>
+
+        </div>
+        <div class="usage">
+            <div class="statistics-header"><span class="owie-label">USAGE</span></div>
+            <div class="statistics-text">
+                <span class="value-text">60.03</span><span class="owie-label value-label"> mAh</span>
+            </div>
+        </div>
+        <div class="regen">
+            <div class="statistics-header"><span class="owie-label">REGEN</span></div>
+            <div class="statistics-text">
+                <span class="value-text">60.03</span><span class="owie-label value-label"> mAh</span>
+            </div>
+        </div>
+    </div>
+    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+    <div class="session-statistics header"><i class="fa-solid fa-lock"></i>&nbsp;BOARD LOCKING</div>
+    <div>
+        <div class="boardlocking-disabled hidden">
+            <div>The Board locking feature is currently <b>not</b> enabled!<br>Please enable it in the settings!</div>
+        </div>
+        <div class="boardlocking-enabled">
+            <div class="unlock-button"><i class="fa-solid fa-unlock"></i></div>
+            <div class="unlocking-text owie-label">Unlock Your Board</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+

@@ -1,0 +1,375 @@
+body {
+    background-color: lightgrey;
+    font-family: Helvetica;
+    font-size: 1em;
+    color: #565656
+}
+.main {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: whitesmoke;
+    min-width: 100px;
+    max-width: 650px;
+    height: 100%;
+    overflow: hidden;
+    /*margin-bottom: 60px;*/
+    /*padding: 5px;*/
+}
+.header {
+    font-style: italic;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin-left: -10px;
+    margin-top: 5px;
+}
+.header.top {
+    display: inline-flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+}
+.header.top > .menu {
+    font-size: 1.5em;
+    text-align: end;
+    margin-right: 5px;
+}
+.header > .owie-name {
+    padding-left: 18px;
+}
+
+.owie-loading-bars {
+    padding: 0;
+    margin: 0;
+
+}
+.progress {
+    width: 100%;
+    height: 50px;
+    display: inline-block;
+    background-color: white;
+}
+
+.progress .progress__bar {
+    height: 100%;
+    width: 0;
+
+    transition: 0.3s;
+    margin-top: -50px
+}
+
+.progress.bms .progress__bar {
+    background-color: lightgrey;
+}
+.progress.owie .progress__bar {
+    background-color: #68d0f7;
+}
+
+.progress > .progress-text {
+    height: 50px;
+    z-index: 3;
+    flex-flow: row;
+    font-size: 1.5em;
+    padding-top: 7px;
+}
+
+.progress > .progress-text > div {
+    display: inline-block;
+}
+
+.progress > .progress-text > .loading-name {
+   margin-left: 10px
+}
+.progress > .progress-text > .loading-percentage {
+    text-align: center;
+}
+
+.progress > .progress-text > .loading-icon {
+    text-align: right;
+    margin-right: 10px;
+    padding-top: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.loading-spacer {
+    height: 5px;
+}
+.owie-current {
+    margin-top: 77px;
+}
+.current-icon {
+    opacity: 0.1;
+    font-size: 1.5em;
+    padding-top: 50px;
+    padding-left: 30px;
+    display: inline-block;
+}
+.current-content {
+    margin-right: 0 !important;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    margin-top: -60px;
+    justify-content: space-evenly;
+}
+
+.progress-gauge{
+    position: relative;
+    margin: 1px;
+    float:left;
+    text-align: center;
+    border-bottom: 1px;
+    width: 100%;
+}
+.progress-gauge > .barOverflow{ /* Wraps the rotating .bar */
+    position: relative;
+    overflow: hidden; /* Comment this line to understand the trick */
+    width:80px;
+    height: 80px; /* quater circle (overflow) */
+    margin-bottom: -14px; /* bring the numbers up */
+
+}
+.progress-gauge.current > .barOverflow{
+    transform: rotate(90deg) ;
+}
+.progress-gauge.regen > .barOverflow{
+    float: right;
+}
+
+.bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 15px solid white;
+    border-bottom-color: #0bf;
+    border-right-color: #0bf;
+}
+.current-gauge {
+    display: flex;
+    /*flex-flow: column;*/
+    flex-flow: row ;
+}
+
+.owie-label {
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity: 0.6;
+}
+.current-header {
+    padding-bottom: 10px;
+}
+.value-text {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.voltage-text {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 35px;
+}
+.value-label {
+    font-size: 1em;
+}
+
+.gauge-separator {
+    border: 1px solid #565656;
+    height: 23px;
+    margin-bottom: -12px;
+    margin-top: -7px;
+}
+
+.usage-statistics > * {
+    display: inline-flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.session-statistics {
+    margin: 15px;
+    letter-spacing: 2px;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #565656;
+    height: 60px;
+}
+.voltage {
+    margin-top: -10px;
+}
+.boardlocking-enabled {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+}
+.boardlocking-disabled{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+.boardlocking-enabled > .unlock-button {
+    height: 100px;
+    width: 100px;
+    border: 5px solid gray;
+    border-radius: 50%;
+    text-align: center;
+}
+.boardlocking-enabled > .unlock-button > i {
+    margin-top: 10px;
+    font-size: 4em;
+}
+
+
+/*COOL NAV*/
+.nav {
+    height: 100%;
+    width: 100%;
+    max-width: 650px;
+    background: whitesmoke;
+    position: absolute;
+    /* float: right; */
+    display: none;
+    z-index: 50;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    opacity: 0;
+}
+.nav-content {
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.nav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #565656;
+    display: block;
+    transition: 0.3s;
+}
+
+.nav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    /*font-size: 36px;*/
+    font-size: 3.1em;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .nav {padding-top: 15px;}
+    .nav a {font-size: 18px;}
+}
+@media screen and (max-width: 280px) {
+    /*.nav {padding-top: 15px;}*/
+    .nav a {font-size: 15px;}
+}
+@media screen and (max-width: 215px) {
+    /*.nav {padding-top: 15px;}*/
+    .nav a {font-size: 12px;}
+}
+@media screen and (max-width: 170px) {
+    /*.nav {padding-top: 15px;}*/
+    .nav a {font-size: 18px;}
+    .menu-text {display: none}
+}
+@media screen and (max-height: 450px) and (max-width: 170px) {
+    .nav {padding-top: 60px;}
+}
+.battery-overlay {
+    height: 100%;
+    width: 100%;
+    max-width: 650px;
+    background: whitesmoke;
+    position: absolute;
+    /* float: right; */
+    display: none;
+    z-index: 50;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    opacity: 0;
+}
+
+/* The alert message box */
+.toaster {
+    visibility: hidden;
+    padding: 20px;
+    color: whitesmoke;
+    min-width: 341px;
+    max-width: 630px;
+    position: absolute;
+    z-index: 50;
+    /* top: 9px; */
+    bottom: 9px;
+    border-radius: 5px;
+    width: 100%;
+    /*width: -moz-available;*/
+     /*width: -webkit-fill-available; */
+    /*width: fill-available;*/
+    margin: 10px;
+}
+
+/* The close button */
+.toaster >.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.error {
+    background-color: #f44336;
+}
+.success {
+    background-color: rgb(4, 206, 4);
+}
+.warning {
+    background-color: rgb(202, 111, 7);
+}
+
+.toaster.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s;
+    animation: fadein 0.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {top: -60px; opacity: 0;}
+    to {top: 9px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {top: -60px; opacity: 0;}
+    to {top: 9px; opacity: 1;}
+}
+
+.loading-icon svg {
+    height: 30px;
+}
+.loading-icon svg > path {
+    fill: #565656;
+}
