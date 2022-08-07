@@ -26,6 +26,16 @@ const openBatteryOverlay = () => {
   setTimeout(()=>{bat.style.opacity = "1"},1);
 }
 
+const toggleBatteryInfo = () => {
+  console.log("sdsdasd");
+  const batInf = document.querySelector(".battery-content");
+  if (batInf.style.maxHeight) {
+    batInf.style.maxHeight = null;
+  } else {
+    batInf.style.maxHeight = "350px";
+  }
+}
+
 const onReady = () => {
   console.log("DOM is available!");
   const nav = document.querySelector('.nav');

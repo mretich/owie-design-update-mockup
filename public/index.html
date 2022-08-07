@@ -8,7 +8,7 @@
     <title>Owie - Status</title>
     <link rel="stylesheet" href="/stylesheets/solid.css">
     <link rel="stylesheet" href="/stylesheets/fontawesome.css">
-    <link rel="stylesheet" href="/stylesheets/picnic.css">
+<!--    <link rel="stylesheet" href="/stylesheets/picnic.css">-->
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="js/owie.js"></script>
 </head>
@@ -115,6 +115,159 @@
                 <div class="current-header"><span class="owie-label">VOLTAGE</span></div>
             </div>
 
+        </div>
+
+    </div>
+    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+    <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY STATUS: OK</div>
+    <div class="battery-content">
+        <div class="battery-info-content flex">
+            <div class="battery-pack">
+                <table>
+                    <tr>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                        <td><div class="gg-battery-empty"><span>4.10</span></div></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="temperatures">
+<!--                <div class="temperature">-->
+<!--                    <div class="" style="height: 61%"></div>-->
+<!--                </div>-->
+
+<!--                <div style="transform: rotate(270deg)">-->
+<!--                    <span>60 &#8451;</span>-->
+<!--                    <progress class="progressHtml" max="65" value="60"></progress>-->
+
+<!--                </div>-->
+<!--                <div style="transform: rotate(270deg)">-->
+<!--                    <span>60 &#8451;</span>-->
+<!--                    <progress class="progressHtml" max="65" value="60"></progress>-->
+
+<!--                </div>-->
+                <div class="flex two" style="justify-content: center; flex-flow: row">
+                    <div class="temp-item">
+                        <p class="styled" style="    margin: 0;
+    padding: 0;">
+                            <meter value="40.93" max="60" low="10" high="50" optimum="40" title="GB">40.93 &#8451;</meter>
+                        </p>
+
+                        <div class="text">40.93 &#8451;</div>
+                    </div>
+                    <div class="temp-item">
+                        <meter value="30" max="60" low="10" high="50" optimum="40">Hmmm</meter>
+                        <div class="text">30 &#8451;</div>
+                    </div>
+                </div>
+                <div class="flex two" style="justify-content: center; flex-flow: row">
+                    <div class="temp-item">
+                        <meter value="55.93"  max="60" low="10" high="50" optimum="40">Hmmm</meter>
+                        <div class="text">55.93 &#8451;</div>
+                    </div>
+                    <div class="temp-item">
+                        <meter value="60" max="60" low="10" high="50" optimum="40">Hmmm</meter>
+                        <div class="text">60 &#8451;</div>
+                    </div>
+                </div>
+<!--                <div class="temp-progress">-->
+<!--                    <div class="temp-bar"></div>-->
+<!--                </div>-->
+<!--                <div class="temp-progress">-->
+<!--                    <div class="temp-bar"></div>-->
+<!--                </div>-->
+<!--                <div class="temp-progress">-->
+<!--                    <div class="temp-bar"></div>-->
+<!--                </div>-->
+<!--                <div class="temp-progress">-->
+<!--                    <div class="temp-bar"></div>-->
+<!--                </div>-->
+<!--                <div class="flex two">-->
+<!--                    <div class="center">-->
+<!--                        <div class="circle">-->
+<!--                            <div class="panel">-->
+<!--                                <span class="temp">100 C</span>-->
+<!--                                <svg class="marker-svg" height="60" width="60">-->
+<!--                                    <defs>-->
+<!--                                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="60" refY="3" orient="auto" markerUnits="strokeWidth">-->
+<!--                                            <path d="M5,0 L5,5 L0,3 z" fill="#565656" />-->
+<!--                                        </marker>-->
+<!--                                    </defs>-->
+<!--                                    <line class="line" x1="0" y1="30" x2="120" y2="30" marker-end="url(#arrow)" />-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                            <div class="helper"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="center">-->
+<!--                        <div class="circle">-->
+<!--                            <div class="panel">-->
+<!--                                <span class="temp">100 C</span>-->
+<!--                                <svg class="marker-svg" height="60" width="60">-->
+<!--                                    <defs>-->
+<!--                                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="60" refY="3" orient="auto" markerUnits="strokeWidth">-->
+<!--                                            <path d="M5,0 L5,5 L0,3 z" fill="#565656" />-->
+<!--                                        </marker>-->
+<!--                                    </defs>-->
+<!--                                    <line class="line" x1="0" y1="30" x2="120" y2="30" marker-end="url(#arrow)" />-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                            <div class="helper"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="center">-->
+<!--                        <div class="circle">-->
+<!--                            <div class="panel">-->
+<!--                                <span class="temp">100 C</span>-->
+<!--                                <svg class="marker-svg" height="60" width="60">-->
+<!--                                    <defs>-->
+<!--                                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="60" refY="3" orient="auto" markerUnits="strokeWidth">-->
+<!--                                            <path d="M5,0 L5,5 L0,3 z" fill="#565656" />-->
+<!--                                        </marker>-->
+<!--                                    </defs>-->
+<!--                                    <line class="line" x1="0" y1="30" x2="120" y2="30" marker-end="url(#arrow)" />-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                            <div class="helper"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="center">-->
+<!--                        <div class="circle">-->
+<!--                            <div class="panel">-->
+<!--                                <span class="temp">100 C</span>-->
+<!--                                <svg class="marker-svg" height="60" width="60">-->
+<!--                                    <defs>-->
+<!--                                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="60" refY="3" orient="auto" markerUnits="strokeWidth">-->
+<!--                                            <path d="M5,0 L5,5 L0,3 z" fill="#565656" />-->
+<!--                                        </marker>-->
+<!--                                    </defs>-->
+<!--                                    <line class="line" x1="0" y1="30" x2="120" y2="30" marker-end="url(#arrow)" />-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                            <div class="helper"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+
+            </div>
         </div>
 
     </div>

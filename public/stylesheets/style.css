@@ -1,8 +1,113 @@
+html {
+    font-family: sans-serif;
+    /* 1 */
+    -ms-text-size-adjust: 100%;
+    /* 2 */
+    -webkit-text-size-adjust: 100%;
+    /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
 body {
+    margin: 0;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+body {
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+.flex {
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: -0.6em;
+    width: calc(100% + 0.6em);
+    flex-wrap: wrap;
+    transition: all 0.3s ease;
+}
+
+.flex > * {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    /* Default for IE10 bug */
+    padding-left: 0.6em;
+    padding-bottom: 0.6em;
+}
+
+.flex[class*=one] > *, .flex[class*=two] > *, .flex[class*=three] > *, .flex[class*=four] > *, .flex[class*=five] > *, .flex[class*=six] > *, .flex[class*=seven] > *, .flex[class*=eight] > *, .flex[class*=nine] > *, .flex[class*=ten] > *, .flex[class*=eleven] > *, .flex[class*=twelve] > * {
+    flex-grow: 0;
+}
+
+.flex.grow > * {
+    flex-grow: 1;
+}
+
+
+.one > * {
+    width: 100%;
+}
+
+.two > * {
+    width: 50%;
+}
+
+.three > * {
+    width: 33.33333%;
+}
+
+.four > * {
+    width: 25%;
+}
+
+.five > * {
+    width: 20%;
+}
+
+.six > * {
+    width: 16.66666%;
+}
+
+.seven > * {
+    width: 14.28571%;
+}
+
+.eight > * {
+    width: 12.5%;
+}
+
+.nine > * {
+    width: 11.11111%;
+}
+
+.ten > * {
+    width: 10%;
+}
+
+.eleven > * {
+    width: 9.09091%;
+}
+
+.twelve > * {
+    width: 8.33333%;
+}
+body {
+    margin: 0;
     background-color: lightgrey;
-    font-family: Helvetica;
+    font-family: Helvetica, sans-serif;
     font-size: 1em;
-    color: #565656
+    color: #565656;
 }
 .main {
     margin-left: auto;
@@ -374,4 +479,242 @@ body {
 }
 .loading-icon svg > path {
     fill: #565656;
+}
+.battery-statistics {
+    margin: 8px 15px 5px 18px;
+    letter-spacing: 2px;
+}
+.battery-content {
+    width: 100%;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+.battery-info-content {
+    justify-content: space-evenly;
+}
+.battery-pack {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    width: 333px;
+    height: 140px;
+    /*transform: scale();*/
+    border: 6px solid lightgrey;
+    border-radius: 12px;
+    margin-left: 6px;
+    background-color: lightgrey;
+    padding: 0;
+}
+.battery-pack::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 12px;
+    width: 20px;
+    height: 70px;
+    right: -20px;
+    top: 25px;
+    background-color: lightgrey;
+}
+.battery-pack td {
+    padding: 8px;
+}
+
+.gg-battery-empty {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 26px;
+    /*transform: scale();*/
+    border: 2px solid #68d0f7;
+    border-radius: 3px;
+    margin-left: -3px;
+    background-color: #68d0f7;
+}
+.gg-battery-empty > span {
+    padding-left: 6px;
+}
+.gg-battery-empty::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 6px;
+    height: 12px;
+    right: -6px;
+    top: 4px;
+    background: #68d0f7
+}
+.center {
+    position: relative;
+    /* top: 50%; */
+    /* left: 50%; */
+    width: 100px;
+    height: 100px;
+    background: whitesmoke;
+    /* border-radius: 50%; */
+    /* box-shadow: 0px 0px 12px 4px rgb(0 0 0 / 10%); */
+    /* transform: translate(-50%, -50%); */
+    overflow: hidden;
+}
+.circle {
+
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    box-shadow: inset 2px 2px 8px rgb(0 0 0 / 40%);
+    background: whitesmoke;
+    background: linear-gradient(to right, #524cff 0%, #ff4805 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#524cff", endColorstr="#ff4805", GradientType=1 );
+}
+
+.panel {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: whitesmoke;
+}
+
+.marker-svg {
+    transform: rotate(70deg);
+    transition: all 1s ease-in-out;
+    height: 60px;
+    width: 60px;
+}
+
+.line {
+    stroke: transparent;
+    stroke-width: 2px;
+}
+
+.helper {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background: whitesmoke;
+    top: 50px;
+    z-index: -1;
+}
+
+.panel > span {
+    display: block;
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+.maxmin {
+    top: 20px;
+    font-size: 14px;
+}
+
+.min {
+    color: blue;
+}
+
+.max {
+    color: red;
+}
+
+.temp {
+    top: 27%;
+    font-size: 1em;
+    display: block;
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    transform: translateX(-50%);
+    width: 100px;
+}
+
+.location {
+    bottom: 25px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.temp-item {
+    display: flex;
+    /* position: relative; */
+    /* margin-left: 0px; */
+    padding: 17px;
+}
+.temp-item .text {
+    bottom: 0;
+    left: 0;
+    padding-top: 19px;
+    margin-left: -11px;
+    width: 70px;
+
+}
+.temp-item meter {
+    transform: rotate(270deg);
+    width: 60px;
+    height: 31px;
+    border-radius: 3px;
+}
+.styled meter {
+
+/* Reset the default appearance */
+    -moz-appearance: none;
+    appearance: none;
+    /* For Firefox */
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+/* WebKit */
+.styled meter::-webkit-meter-bar {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 3px;
+}
+
+.styled meter::-webkit-meter-optimum-value,
+.styled meter::-webkit-meter-suboptimum-value,
+.styled meter::-webkit-meter-even-less-good-value {
+    border-radius: 3px;
+}
+
+.styled meter::-webkit-meter-optimum-value {
+    background: #86CC00;
+}
+
+.styled meter::-webkit-meter-suboptimum-value {
+    background: #FFDB1A;
+}
+
+.styled meter::-webkit-meter-even-less-good-value  {
+    background: #CC4600;
+}
+
+
+/* Firefox */
+.styled meter::-moz-meter-bar {
+    border-radius: 3px;
+}
+
+.styled meter:-moz-meter-optimum::-moz-meter-bar {
+    background: #86CC00;
+}
+
+.styled meter:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: #FFDB1A;
+}
+
+.styled meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: #CC4600;
 }
