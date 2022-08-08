@@ -109,6 +109,20 @@ body {
     font-size: 1em;
     color: #565656;
 }
+
+body.owie-app {
+    --owie-percentage-int: 0;
+    --bms-percentage-int: 0;
+    --current: 0.0;
+}
+
+.owie-app {
+    --owie-percentage: calc(var(--owie-percentage-int)/100 * 100%);
+    --bms-percentage: calc(var(--bms-percentage-int)/100 * 100%);
+    --max-current: 40;
+    --min-current: -20;
+}
+
 .main {
     margin-left: auto;
     margin-right: auto;
@@ -258,12 +272,20 @@ body {
     margin-top: -5px;
 }
 .progress-gauge.current > .barOverflow{
-    transform: rotate(90deg) ;
+    transform: rotate(90deg);
 }
 .progress-gauge.regen > .barOverflow{
     float: right;
 }
 
+.progress-gauge.current > .barOverflow > .bar {
+    transform: rotate(calc(45deg + (90deg * max(0, var(--current)) / var(--max-current))));
+    transition: 0.3s;
+}
+.progress-gauge.regen > .barOverflow > .bar {
+    transform: rotate(calc(315deg - (90deg * min(0, var(--current)) / var(--min-current))));
+    transition: 0.3s;
+}
 .bar{
     position: absolute;
     top: 0;
