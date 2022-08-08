@@ -153,7 +153,7 @@ body {
 .progress {
     width: 100%;
     height: 50px;
-    display: inline-block;
+    display: block;
     background-color: white;
 }
 
@@ -165,9 +165,23 @@ body {
     margin-top: -50px
 }
 
-.progress.bms .progress__bar {
-    background-color: lightgrey;
+.progress.bms {
+    color: lightgrey;
 }
+
+.progress.bms.bar_overlay {
+    color: white;
+    background-color: lightgrey;
+    margin-top: -50px;
+    transition: clip-path 0.3s;
+    clip-path: polygon(0 0, calc(var(--bms-percentage)) 0,calc(var(--bms-percentage)) 100%, 0 100%);
+}
+
+.progress.bms .loading-percentage::before {
+    counter-reset: prcnt var(--bms-percentage-int);
+    content: counter(prcnt);
+}
+
 .progress.owie .progress__bar {
     background-color: #68d0f7;
 }
