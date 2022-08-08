@@ -25,4 +25,15 @@ console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + 
     let voltageText = voltage.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
     document.getElementsByClassName("voltage-text")[0].getElementsByClassName("value-text")[0].innerText = voltageText;
 
+    let cellBase = (voltage / 15);
+    let restVolt = voltage;
+    let nCells = 0;
+
+    for (let c of document.getElementsByClassName("battery-pack")[0].getElementsByTagName("span")) {
+        nCells++;
+        let cellVolt = (nCells == 15) ? restVolt : cellBase + (Math.random() > 0.95 ? 0.01 : 0.00);
+        restVolt = restVolt - cellVolt;
+        let cellText = cellVolt.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2})
+        c.innerText = cellText;
+    };
 }, 1000) + ");");
