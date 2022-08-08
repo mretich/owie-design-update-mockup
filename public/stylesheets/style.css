@@ -279,11 +279,11 @@ body.owie-app {
 }
 
 .progress-gauge.current > .barOverflow > .bar {
-    transform: rotate(calc(45deg + (90deg * max(0, var(--current)) / var(--max-current))));
+    transform: rotate(calc(45deg + (90deg * clamp(0.0, var(--current), var(--max-current)) / var(--max-current))));
     transition: 0.3s;
 }
 .progress-gauge.regen > .barOverflow > .bar {
-    transform: rotate(calc(315deg - (90deg * min(0, var(--current)) / var(--min-current))));
+    transform: rotate(calc(225deg - (90deg * clamp(var(--min-current), var(--current), 0.0) / var(--min-current))));
     transition: 0.3s;
 }
 .bar{
@@ -296,7 +296,6 @@ body.owie-app {
     box-sizing: border-box;
     border: 16px solid white;
     border-bottom-color: #0bf;
-    border-right-color: #0bf;
     margin-top: 5px;
     margin-left: 5px;
 }
