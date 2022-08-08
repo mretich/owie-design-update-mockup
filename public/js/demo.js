@@ -16,4 +16,13 @@ console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + 
     for (const [key, value] of Object.entries(props)) {
         style.setProperty(key, value);
     };
+
+
+    let currentText = current.toLocaleString(undefined, {maximumFractionDigits: 1, minimumFractionDigits: 1});
+    document.getElementsByClassName("current-text")[0].getElementsByClassName("value-text")[0].innerText = currentText;
+
+    let voltage = (15 * 2.6) + (0.01 * owiePercentage * 15 * (4.14 - 2.6));
+    let voltageText = voltage.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
+    document.getElementsByClassName("voltage-text")[0].getElementsByClassName("value-text")[0].innerText = voltageText;
+
 }, 1000) + ");");
