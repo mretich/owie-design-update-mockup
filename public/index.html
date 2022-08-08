@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="js/owie.js"></script>
 </head>
-<body class="owie-app" style="--owie-percentage-int: 61;--bms-percentage-int: 69">
-<div class="main" style="--owie-percentage: calc(var(--owie-percentage-int)/100 * 100%); --bms-percentage: calc(var(--bms-percentage-int)/100 * 100%)">
+<body class="owie-app" >
+<div class="main">
     <div class="toaster" id="toaster">
         <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
         <div id="alert-msg" style='text-align:center'></div>
@@ -109,13 +109,13 @@
                 <div class="current-gauge">
                     <div class="progress-gauge regen">
                         <div class="barOverflow">
-                            <div class="bar" style="transform: rotate(355deg)"></div>
+                            <div class="bar"></div>
                         </div>
                     </div>
                     <div class="gauge-separator"></div>
                     <div class="progress-gauge current">
                         <div class="barOverflow">
-                            <div class="bar" style="transform: rotate(355deg)"></div>
+                            <div class="bar"></div>
                         </div>
                     </div>
                 </div>
