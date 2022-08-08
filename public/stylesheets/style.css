@@ -164,6 +164,11 @@ body {
     margin-top: -50px
 }
 
+.progress.owie .loading-percentage::before {
+    counter-reset: prcnt var(--owie-percentage-int);
+    content: counter(prcnt);
+}
+
 .progress.bms {
     color: lightgrey;
 }
