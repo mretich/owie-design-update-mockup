@@ -17,12 +17,16 @@ console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + 
 
     let style = document.getElementsByTagName("body")[0].style
 
-    let owiePercentage = Math.max(0, Math.min(100, style.getPropertyValue("--owie-percentage-int") - 19 + Math.floor(Math.random() * 41)));
-    let bmsPercentage = Math.max(0, Math.min(100, Math.floor(owiePercentage * 0.9 + (Math.random() * 0.2 * owiePercentage))));
-    let maxCurrent = 30;
-    let minCurrent = -10;
+    let maxCurrent = 15;
+    let minCurrent = -3;
 
-    let current = minCurrent + 0.1 * (Math.floor(Math.random() * 10 * (maxCurrent - minCurrent + 1)));
+    let oldPercent = (style.getPropertyValue("--owie-percentage-int")||0);
+    let isRegen = (oldPercent == 0) || ((oldPercent < 100) && Math.random() >= 0.5);
+
+    let current = 0.1 * Math.floor(10 * Math.random() * (isRegen?minCurrent:maxCurrent));
+    let owiePercentage = Math.max(0, Math.min(100, oldPercent - Math.sign(current) * (Math.floor(Math.random() * 21))));
+    let bmsPercentage = Math.max(0, Math.min(100, Math.floor(owiePercentage * 0.9 + (Math.random() * 0.2 * owiePercentage))));
+
 
     let props = {
         "--owie-percentage-int": owiePercentage,
