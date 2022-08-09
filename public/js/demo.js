@@ -1,4 +1,15 @@
-console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + window.setInterval(function demoModeIteration() {
+
+window.toggleDemoMode = function() {
+    if (window.demo_intervalId) {
+        window.clearInterval(window.demo_intervalId);
+        delete window.demo_intervalId;
+        return;
+    }
+
+    window.demo_intervalId = window.setInterval(window.demo_iterate, 1000);
+};
+
+window.demo_iterate = function() {
 
     // fake uptime; based on first function call
     window.demo_startTime = window.demo_startTime || Date.now();
@@ -75,4 +86,9 @@ console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + 
     if (elem.innerText != fakeUsage) {
         elem.innerText =  fakeUsage; }
     //
-}, 1000) + ");");
+};
+
+// attach to gui element
+window.setTimeout(function() {
+    document.getElementsByClassName("owie-name")[0].onclick = window.toggleDemoMode;
+}, 0);
