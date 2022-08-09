@@ -498,7 +498,7 @@ body.owie-app {
     padding: 20px;
     color: whitesmoke;
     /* min-width: 341px; */
-    max-width: 630px;
+    max-width: 650px;
     position: absolute;
     z-index: 50;
     /* top: 9px; */
@@ -511,7 +511,7 @@ body.owie-app {
 
 /* The close button */
 .toaster >.closebtn {
-    margin-left: 15px;
+    /*margin-left: 15px;*/
     color: white;
     font-weight: bold;
     float: right;

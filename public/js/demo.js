@@ -5,7 +5,7 @@ window.toggleDemoMode = function() {
         delete window.demo_intervalId;
         return;
     }
-
+    window.demo_iterate();
     window.demo_intervalId = window.setInterval(window.demo_iterate, 1000);
 };
 
@@ -61,7 +61,7 @@ window.demo_iterate = function() {
     let restVolt = voltage;
     let nCells = 0;
 
-    for (let c of document.getElementsByClassName("battery-pack")[0].getElementsByTagName("span")) {
+    for (let c of document.getElementsByClassName("battery-voltage-text")) {
         nCells++;
         let cellVolt = (nCells == 15) ? restVolt : cellBase + (Math.random() > 0.95 ? 0.01 : 0.00);
         restVolt = restVolt - cellVolt;
