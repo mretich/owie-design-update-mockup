@@ -1,7 +1,8 @@
-console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + window.setInterval(function randomizeValues() {
+console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + window.setInterval(function demoModeIteration() {
 
     // fake uptime; based on first function call
     window.demo_startTime = window.demo_startTime || Date.now();
+    window.demo_fakeUsage = window.demo_fakeUsage || {};
 
     let uptime = Math.floor((Date.now() - window.demo_startTime) / 1000),
         s = uptime % 60,
@@ -10,7 +11,7 @@ console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + 
         prettyUptime = (h<1?'':h+':') + (m<10?'0'+m:m) + ':' + (s<10?'0'+s:s);
 
     document.
-        getElementsByClassName("statistics-text")[0].
+        getElementsByClassName("uptime")[0].
             getElementsByClassName("value-text")[0].
                 innerText = prettyUptime;
     //
@@ -56,4 +57,22 @@ console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + 
         let cellText = cellVolt.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2})
         c.innerText = cellText;
     };
+
+    // fake mAh usage/regen, loosly based on fake current
+    let fakeUsage = Math.abs(current / 3.6)
+    let target = current < 0?"regen":"usage";
+
+    window.demo_fakeUsage[target] =
+       (window.demo_fakeUsage[target] || 0) + fakeUsage;
+
+    let elem = document.
+        getElementsByClassName("usage-statistics")[0].
+            getElementsByClassName(target)[0].
+                getElementsByClassName("value-text")[0];
+
+    fakeUsage = Math.floor(window.demo_fakeUsage[target]);
+
+    if (elem.innerText != fakeUsage) {
+        elem.innerText =  fakeUsage; }
+    //
 }, 1000) + ");");
