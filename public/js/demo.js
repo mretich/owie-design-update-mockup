@@ -1,4 +1,20 @@
 console.log("You can stop demo mode by entering this:\nwindow.clearInterval(" + window.setInterval(function randomizeValues() {
+
+    // fake uptime; based on first function call
+    window.demo_startTime = window.demo_startTime || Date.now();
+
+    let uptime = Math.floor((Date.now() - window.demo_startTime) / 1000),
+        s = uptime % 60,
+        m = (uptime % 3600 - s) / 60,
+        h = Math.floor(uptime / 3600),
+        prettyUptime = (h<1?'':h+':') + (m<10?'0'+m:m) + ':' + (s<10?'0'+s:s);
+
+    document.
+        getElementsByClassName("statistics-text")[0].
+            getElementsByClassName("value-text")[0].
+                innerText = prettyUptime;
+    //
+
     let style = document.getElementsByTagName("body")[0].style
 
     let owiePercentage = Math.max(0, Math.min(100, style.getPropertyValue("--owie-percentage-int") - 19 + Math.floor(Math.random() * 41)));
