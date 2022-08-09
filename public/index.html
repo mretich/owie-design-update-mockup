@@ -42,6 +42,12 @@
         </div>
         <div class="menu" onclick="navOpen('1')">&#9776;</div>
     </div>
+    <div class="boardlocking-enabled">
+        <div class="unlock-button">
+            <svg viewBox="0 0 448 512"><path d="M144 192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80V144C80 64.47 144.5 0 224 0C281.5 0 331 33.69 354.1 82.27C361.7 98.23 354.9 117.3 338.1 124.9C322.1 132.5 303.9 125.7 296.3 109.7C283.4 82.63 255.9 64 224 64C179.8 64 144 99.82 144 144L144 192z"/></svg>
+        </div>
+        <div class="unlocking-text owie-label">Unlock Your Board</div>
+    </div>
     <div class="owie-loading-bars">
         <!-- check if other possibilities... -->
         <div class="progress owie">
@@ -122,59 +128,89 @@
     <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY STATUS: <span class="battery-severity">OK</span></div>
     <div class="battery-content">
         <div class="battery-info-content flex">
-            <div class="battery-pack">
-                <!-- TODO: try to bring the battery into flex -->
-                <table>
-                    <tr>
-                        <td><div id="cell-1" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-2" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-3" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-4" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-5" class="gg-battery-empty"><span>4.10</span></div></td>
-                    </tr>
-                    <tr>
-                        <td><div id="cell-6" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-7" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-8" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-9" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-10" class="gg-battery-empty"><span>4.10</span></div></td>
-                    </tr>
-                    <tr>
-                        <td><div id="cell-11" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-12" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-13" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-14" class="gg-battery-empty"><span>4.10</span></div></td>
-                        <td><div id="cell-15" class="gg-battery-empty"><span>4.10</span></div></td>
-                    </tr>
-                </table>
+                <div class="battery-pack">
+                    <!-- TODO: try to bring the battery into flex -->
+
+                    <div class="flex">
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+                        <div class="cell">
+                            <div class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+                        </div>
+
+                    </div>
             </div>
             <div class="temperatures">
-                <div class="flex two" style="justify-content: center; flex-flow: row">
+                <div class="flex" style="justify-content: center">
                     <div class="temp-item" id="temp-sensor1">
                         <div class="temperature-gauge">
                             <div class="temperature-gauge__bar" style="width: 80%;"></div>
                         </div>
-                        <div class="value-text">40.93 <span class="owie-label value-label">&#8451;</span></div>
+                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
                     </div>
                     <div class="temp-item" id="temp-sensor2">
                         <div class="temperature-gauge">
                             <div class="temperature-gauge__bar" style="width: 30%"></div>
                         </div>
-                        <div class="value-text">40.93 <span class="owie-label value-label">&#8451;</span></div>
+                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
                     </div>
-                </div>
-                <div class="flex two" style="justify-content: center; flex-flow: row">
                     <div class="temp-item" id="temp-sensor3">
                         <div class="temperature-gauge">
                             <div class="temperature-gauge__bar" style="width: 30%"></div>
                         </div>
-                        <div class="value-text">40.93 <span class="owie-label value-label">&#8451;</span></div>
+                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
                     </div>
                     <div class="temp-item" id="temp-sensor4">
                         <div class="temperature-gauge">
                             <div class="temperature-gauge__bar" style="width: 30%"></div>
                         </div>
-                        <div class="value-text">40.93 <span class="owie-label value-label">&#8451;</span></div>
+                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                    </div>
+                    <div class="temp-item" id="temp-sensor5">
+                        <div class="temperature-gauge">
+                            <div class="temperature-gauge__bar" style="width: 30%"></div>
+                        </div>
+                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
                     </div>
                 </div>
 <!--                <div class="temp-progress">-->
@@ -285,17 +321,9 @@
             </div>
         </div>
     </div>
-    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
-    <div class="session-statistics header"><i class="fa-solid fa-lock"></i>&nbsp;BOARD LOCKING</div>
-    <div>
-        <div class="boardlocking-disabled hidden">
-            <div>The Board locking feature is currently <b>not</b> enabled!<br>Please enable it in the settings!</div>
-        </div>
-        <div class="boardlocking-enabled">
-            <div class="unlock-button"><i class="fa-solid fa-unlock"></i></div>
-            <div class="unlocking-text owie-label">Unlock Your Board</div>
-        </div>
-    </div>
+<!--    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>-->
+<!--    <div class="session-statistics header"><i class="fa-solid fa-lock"></i>&nbsp;BOARD LOCKING</div>-->
+
 
 </div>
 

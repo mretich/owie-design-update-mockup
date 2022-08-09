@@ -1,6 +1,4 @@
-/**
- * Copyright (c) 2022, LOGIN EDV-Software, Beratung und Training GmbH
- */
+
 function areWeReady(fn) {
   if (document.readyState === "complete" || document.readyState === "interactive") {
     setTimeout(fn, 1);
@@ -32,13 +30,21 @@ const toggleBatteryInfo = () => {
   if (batInf.style.maxHeight) {
     batInf.style.maxHeight = null;
   } else {
-    batInf.style.maxHeight = "350px";
+    batInf.style.maxHeight = "100%";
   }
 }
 
 const onReady = () => {
   console.log("DOM is available!");
   const nav = document.querySelector('.nav');
+  const unlockButton = document.querySelector(".unlock-button");
+  unlockButton.addEventListener('click', (e) => {
+    let toaster = document.getElementById("toaster");
+    toaster.classList.add("success");
+    document.getElementById("alert-msg").innerHTML = "Successfully unlocked!<br>Please restart your Board!";
+    toaster.classList.add("show");
+    unlockButton.parentElement.style.display = "none";
+  })
   nav.addEventListener('transitionend', (e) => {
     console.log('Transition ended', e, nav);
     if (nav.style.opacity === '0') nav.style.display = 'none';

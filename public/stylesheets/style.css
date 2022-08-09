@@ -102,6 +102,7 @@ body {
 .twelve > * {
     width: 8.33333%;
 }
+
 body {
     margin: 0;
     background-color: lightgrey;
@@ -116,7 +117,7 @@ body {
     min-width: 100px;
     max-width: 650px;
     height: 100%;
-    overflow: hidden;
+    overflow: hidden auto;
     /*margin-bottom: 60px;*/
     /*padding: 5px;*/
 }
@@ -331,15 +332,52 @@ body {
 .boardlocking-enabled > .unlock-button {
     height: 100px;
     width: 100px;
-    border: 5px solid gray;
+    border: 5px solid #565656;
     border-radius: 50%;
     text-align: center;
-}
-.boardlocking-enabled > .unlock-button > i {
-    margin-top: 10px;
-    font-size: 4em;
+    box-shadow: 0 0 0 rgba(104, 208, 247, 0.6);
+    /*box-shadow: 0 0 0 rgba(255, 255, 255, 0.6);*/
+    animation: pulse 2s infinite;
 }
 
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(104, 208, 247, 0.6);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 20px rgba(104, 208, 247, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(104, 208, 247, 0);
+    }
+}
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(104, 208, 247, 0.6);
+        box-shadow: 0 0 0 0 rgba(104, 208, 247, 0.6);
+        /*box-shadow: 0 0 0 0 rgb(255, 255, 255);*/
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 20px rgba(104, 208, 247, 0);
+        box-shadow: 0 0 0 20px rgba(104, 208, 247, 0);
+        /*box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);*/
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(104, 208, 247, 0);
+        box-shadow: 0 0 0 0 rgba(104, 208, 247, 0);
+        /*box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);*/
+    }
+}
+
+.boardlocking-enabled > .unlock-button > svg {
+    /*margin-top: 10px;*/
+    /*font-size: 4em;*/
+    height: 71px;
+    margin-top: 5px;
+}
+.boardlocking-enabled > .unlock-button > svg > path {
+    fill: #565656
+}
 
 /*COOL NAV*/
 .nav {
@@ -419,18 +457,16 @@ body {
     visibility: hidden;
     padding: 20px;
     color: whitesmoke;
-    min-width: 341px;
+    /* min-width: 341px; */
     max-width: 630px;
     position: absolute;
     z-index: 50;
     /* top: 9px; */
     bottom: 9px;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
     width: 100%;
-    /*width: -moz-available;*/
-     /*width: -webkit-fill-available; */
-    /*width: fill-available;*/
-    margin: 10px;
+    /* width: -webkit-fill-available; */
+    margin: 0px;
 }
 
 /* The close button */
@@ -465,13 +501,13 @@ body {
 
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
-    from {top: -60px; opacity: 0;}
-    to {top: 9px; opacity: 1;}
+    from {bottom: -60px; opacity: 0;}
+    to {bottom: 9px; opacity: 1;}
 }
 
 @keyframes fadein {
-    from {top: -60px; opacity: 0;}
-    to {top: 9px; opacity: 1;}
+    from {bottom: -60px; opacity: 0;}
+    to {bottom: 9px; opacity: 1;}
 }
 
 .loading-icon svg {
@@ -491,24 +527,41 @@ body {
     overflow: hidden;
 }
 .battery-info-content {
-    justify-content: space-around;
-    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    /*margin-bottom: 10px;*/
 }
+.battery-container {
+    width: 360px;
+    padding: 0;
+}
+
 .battery-pack {
     box-sizing: border-box;
     position: relative;
     display: block;
     width: 333px;
-    height: 140px;
-    /*transform: scale();*/
-    border: 6px solid lightgrey;
+    /* height: 140px; */
+    /*border: 6px solid lightgrey;*/
     border-radius: 12px;
-    margin-left: 6px;
-    background-color: lightgrey;
-    padding: 0;
+    margin-left: 10px;
+    /*background-color: lightgrey;*/
+    padding: 9px;
+    /*min-width: 150px;*/
+    /*box-sizing: border-box;*/
+    /*position: relative;*/
+    /*display: block;*/
+    /*width: 333px;*/
+    /*height: 140px;*/
+    /*!*transform: scale();*!*/
+    /*border: 6px solid lightgrey;*/
+    /*border-radius: 12px;*/
+    /*margin-left: 6px;*/
+    /*background-color: lightgrey;*/
+    /*padding: 0;*/
 }
-.battery-pack::before {
-    content: "";
+.battery-pack::after {
+    /*content: "";*/
     display: block;
     box-sizing: border-box;
     position: absolute;
@@ -529,52 +582,64 @@ body {
     display: block;
     width: 50px;
     height: 26px;
-    /*transform: scale();*/
-    border: 2px solid gray;
-    border-radius: 3px;
+    border-radius: 2px;
     margin-left: -3px;
     background-color: #68d0f7;
+    box-shadow: lightgrey 3px 3px 10px;
 }
-.gg-battery-empty > span {
-    padding-left: 6px;
+.gg-battery-empty .battery-voltage-text {
+    text-align: center;
+    padding-top: 2px;
 }
 .gg-battery-empty::before {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
     content: "";
     display: block;
     box-sizing: border-box;
     position: absolute;
-    border-radius: 3px;
-    width: 6px;
+    width: 5px;
     height: 12px;
-    right: -6px;
-    top: 5px;
+    right: -4px;
+    top: 7px;
     background: #68d0f7;
-    border: 2px solid gray;
+    box-shadow: lightgrey 2px 2px 6px;
 }
 .temperatures {
-    padding: 11px;
+    padding: 11px 0 0 0;
+    margin-left: 5px;
 }
 
 .temp-item {
-    padding: 10px;
+    text-align: center;
+    max-width: 70px;
 }
 
 .temp-item .value-text {
-    font-size: 1em;
-    text-align: left;
-    padding-top: 5px;
+    font-size: 0.9em !important;
+    font-weight: normal;
+    text-align: center;
+    /*padding-top: 5px;*/
+}
+.temp-item .value-label {
+    font-size: 0.8em !important;
 }
 .temperature-gauge {
-    height: 10px;
+    height: 6px;
     background-color: white;
-    width: 70px;
+    width: 60px;
     display: block;
     overflow: hidden;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
 }
 .temperature-gauge__bar {
     background-color: #68d0f7;
     display: block;
-    height: 10px;
+    height: 6px;
     transition: 0.3s ease;
+}
+
+.boardlocking-enabled {
+    margin-bottom: 20px;
+    margin-top: 5px;
 }
