@@ -122,6 +122,9 @@ body.owie-app {
     --bms-percentage: calc(var(--bms-percentage-int)/100 * 100%);
     --max-current: 40;
     --min-current: -20;
+    --text-color: #565656;
+    --bar-color: #68d0f7;
+    --background-color: whitesmoke;
 }
 
 .main {
@@ -202,7 +205,7 @@ body.owie-app {
 }
 
 .progress.owie .progress__bar {
-    background-color: #68d0f7;
+    background-color: var(--bar-color);
 }
 
 .progress > .progress-text {
@@ -296,7 +299,7 @@ body.owie-app {
     border-radius: 50%;
     box-sizing: border-box;
     border: 16px solid white;
-    border-bottom-color: #0bf;
+    border-bottom-color: var(--bar-color);
     margin-top: 5px;
     margin-left: 5px;
 }
@@ -624,7 +627,7 @@ body.owie-app {
     height: 26px;
     border-radius: 2px;
     margin-left: -3px;
-    background-color: #68d0f7;
+    background-color: var(--bar-color);
     box-shadow: lightgrey 3px 3px 10px;
 }
 .gg-battery-empty .battery-voltage-text {
@@ -642,7 +645,7 @@ body.owie-app {
     height: 12px;
     right: -4px;
     top: 7px;
-    background: #68d0f7;
+    background: var(--bar-color);
     box-shadow: lightgrey 2px 2px 6px;
 }
 .temperatures {
@@ -673,7 +676,7 @@ body.owie-app {
     /*border-radius: 3px;*/
 }
 .temperature-gauge__bar {
-    background-color: #68d0f7;
+    background-color: var(--bar-color);
     display: block;
     height: 6px;
     transition: 0.3s ease;
