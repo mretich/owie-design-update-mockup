@@ -19,21 +19,34 @@
         <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
         <div id="alert-msg" style='text-align:center'></div>
     </div>
-    <div class="battery-overlay">
-        Here comes the Battery Compartent!
-        Stay Tuned!
+    <div class="firmware-overlay">
+        <div class="closebtn" onClick="closeFirmwareOverlay()">X</div>
+        <div class="wrapper">
+            <header>Firmware Update</header>
+            <div>
+                <div class="update-upload-progress hidden">
+                    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    <div class="update-text">File upload in progress... (0%)</div>
+                </div>
+                <form id="update-form" action="#">
+                    <input id="updInput" type="file" name="firmware" accept=".bin,.bin.gz" hidden>
+                    <p>Browse Firmware File (.bin, .bin.gz)</p>
+                </form>
+            </div>
+        </div>
     </div>
+
     <div id="nav" class="nav">
         <div class="nav-content">
             <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>
-            <a href="#" onClick="openBatteryOverlay()">
-                <i class="fa-solid fa-battery-full"></i>
-            <span class="menu-text">Battery Information</span>
-            </a>
             <a href="/settings"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>
             <a href="/wifi"><i class="fa-solid fa-wifi"></i> <span class="menu-text">Wifi Configuration</span></a>
             <a href="/monitor"><i class="fa-solid fa-terminal"></i> <span class="menu-text">Monitor BMS data</span></a>
-            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>
+            <a href="#" onClick="openFirmwareOverlay()">
+                <svg viewBox="0 0 448 512" class="menu-firmware-icon"><path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/></svg>
+                <span class="menu-text">Firmware Update</span>
+            </a>
+<!--            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>-->
             <span class="owie-version">v1.4.0</span>
         </div>
     </div>

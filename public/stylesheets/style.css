@@ -480,7 +480,7 @@ body.owie-app {
 @media screen and (max-height: 450px) and (max-width: 170px) {
     .nav {padding-top: 60px;}
 }
-.battery-overlay {
+.firmware-overlay {
     height: 100%;
     width: 100%;
     max-width: 650px;
@@ -491,8 +491,34 @@ body.owie-app {
     z-index: 50;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 20px;
     opacity: 0;
+}
+
+.firmware-overlay .closebtn {
+    text-align: right;
+    font-weight: bold;
+    margin-right: 20px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.upload-btn-wrapper {
+position: relative;
+overflow: hidden;
+margin: 0;
+padding: 0;
+width: 100%;
+}
+
+.upload-btn-wrapper input[type=file] {
+position: absolute;
+left: 0;
+top: 0;
+opacity: 0;
 }
 
 /* The alert message box */
@@ -503,9 +529,9 @@ body.owie-app {
     /* min-width: 341px; */
     max-width: 650px;
     position: absolute;
-    z-index: 50;
+    z-index: 999;
     /* top: 9px; */
-    bottom: 9px;
+    bottom: 0px;
     /*border-radius: 5px;*/
     width: 100%;
     /* width: -webkit-fill-available; */
@@ -545,12 +571,12 @@ body.owie-app {
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
     from {bottom: -60px; opacity: 0;}
-    to {bottom: 9px; opacity: 1;}
+    to {bottom: 0px; opacity: 1;}
 }
 
 @keyframes fadein {
     from {bottom: -60px; opacity: 0;}
-    to {bottom: 9px; opacity: 1;}
+    to {bottom: 0px; opacity: 1;}
 }
 
 .loading-icon svg {
@@ -685,4 +711,124 @@ body.owie-app {
 .boardlocking-enabled {
     margin-bottom: 20px;
     margin-top: 5px;
+}
+
+/*TESTING UPLOAD*/
+.firmware-overlay .wrapper{
+    width: inherit;
+    margin-top: 60px;
+    text-align: center;
+}
+.firmware-overlay .wrapper header{
+    font-size: 27px;
+    font-weight: 600;
+    text-align: center;
+}
+.firmware-overlay .wrapper form{
+    height: 167px;
+    display: flex;
+    cursor: pointer;
+    margin: 30px 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 2px dashed;
+}
+
+.firmware-overlay .wrapper .update-upload-progress {
+    height: 167px;
+    display: block;
+    cursor: pointer;
+    margin: 30px 0;
+    align-items: center;
+}
+.firmware-overlay .wrapper .update-upload-progress .update-text {
+    text-align: center;
+}
+
+.lds-spinner {
+     color: var(--bar-color);
+     display: inline-block;
+     position: relative;
+     width: 80px;
+     height: 80px;
+ }
+.lds-spinner div {
+    transform-origin: 40px 40px;
+    animation: lds-spinner 1.2s linear infinite;
+}
+.lds-spinner div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 37px;
+    width: 6px;
+    height: 18px;
+    border-radius: 20%;
+    background: var(--bar-color);;
+}
+.lds-spinner div:nth-child(1) {
+    transform: rotate(0deg);
+    animation-delay: -1.1s;
+}
+.lds-spinner div:nth-child(2) {
+    transform: rotate(30deg);
+    animation-delay: -1s;
+}
+.lds-spinner div:nth-child(3) {
+    transform: rotate(60deg);
+    animation-delay: -0.9s;
+}
+.lds-spinner div:nth-child(4) {
+    transform: rotate(90deg);
+    animation-delay: -0.8s;
+}
+.lds-spinner div:nth-child(5) {
+    transform: rotate(120deg);
+    animation-delay: -0.7s;
+}
+.lds-spinner div:nth-child(6) {
+    transform: rotate(150deg);
+    animation-delay: -0.6s;
+}
+.lds-spinner div:nth-child(7) {
+    transform: rotate(180deg);
+    animation-delay: -0.5s;
+}
+.lds-spinner div:nth-child(8) {
+    transform: rotate(210deg);
+    animation-delay: -0.4s;
+}
+.lds-spinner div:nth-child(9) {
+    transform: rotate(240deg);
+    animation-delay: -0.3s;
+}
+.lds-spinner div:nth-child(10) {
+    transform: rotate(270deg);
+    animation-delay: -0.2s;
+}
+.lds-spinner div:nth-child(11) {
+    transform: rotate(300deg);
+    animation-delay: -0.1s;
+}
+.lds-spinner div:nth-child(12) {
+    transform: rotate(330deg);
+    animation-delay: 0s;
+}
+@keyframes lds-spinner {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.menu-firmware-icon {
+    width: 22px;
+}
+.menu-firmware-icon path {
+    fill: var(--text-color);
 }
