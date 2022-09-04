@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- The HTML markup is based on the main page of Tasmota -->
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <title>Owie - Status</title>
     <link rel="stylesheet" href="/stylesheets/solid.css">
     <link rel="stylesheet" href="/stylesheets/fontawesome.css">
-<!--    <link rel="stylesheet" href="/stylesheets/picnic.css">-->
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="js/owie.js"></script>
     <script src="js/demo.js"></script>
+
 </head>
-<body class="owie-app" >
+<body class="owie-app">
 <div class="main">
     <div class="toaster" id="toaster">
         <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
         <div id="alert-msg" style='text-align:center'></div>
     </div>
-    <div class="firmware-overlay">
-        <div class="closebtn" onClick="closeFirmwareOverlay()">X</div>
+    <div class="firmware overlay">
+        <div class="closebtn" onClick="closeOverlay()">X</div>
         <div class="wrapper">
             <header>Firmware Update</header>
             <div>
                 <div class="update-upload-progress hidden">
-                    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    <div class="lds-spinner">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                     <div class="update-text">File upload in progress... (0%)</div>
                 </div>
                 <form id="update-form" action="#">
@@ -35,18 +46,101 @@
             </div>
         </div>
     </div>
-
+    <!-- Settings -->
+    <div class="settings overlay">
+        <div class="closebtn" onClick="closeOverlay()">X</div>
+        <div class="wrapper">
+            <!--            <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>-->
+            <div class="wifi-settings header">
+                <svg viewBox="0 0 640 512" class="menu-firmware-icon">
+                    <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
+                </svg>
+                <!--            <i class="fa-solid fa-battery-full"></i>-->
+                &nbsp;WiFi Settings
+            </div>
+            <div>
+                <form action="#" id="wifi-settings">
+                    <label for="wifi">Owie WiFi network name override:</label>
+                    <input type="text" id="wifi" name="apselfname" placeholder="WiFi Name">
+                    <label>WiFi Password</label>
+                    <div>
+                        <input name="pw" id="wifipw" type="password">
+                        <svg viewBox="0 0 576 512" onclick="toggleWifiPwVisibility(this)" class="wifi-pw-visibility"
+                             style=" width: 20px;">
+                            <path d="M160 256C160 185.3 217.3 128 288 128C358.7 128 416 185.3 416 256C416 326.7 358.7 384 288 384C217.3 384 160 326.7 160 256zM288 336C332.2 336 368 300.2 368 256C368 211.8 332.2 176 288 176C287.3 176 286.7 176 285.1 176C287.3 181.1 288 186.5 288 192C288 227.3 259.3 256 224 256C218.5 256 213.1 255.3 208 253.1C208 254.7 208 255.3 208 255.1C208 300.2 243.8 336 288 336L288 336zM95.42 112.6C142.5 68.84 207.2 32 288 32C368.8 32 433.5 68.84 480.6 112.6C527.4 156 558.7 207.1 573.5 243.7C576.8 251.6 576.8 260.4 573.5 268.3C558.7 304 527.4 355.1 480.6 399.4C433.5 443.2 368.8 480 288 480C207.2 480 142.5 443.2 95.42 399.4C48.62 355.1 17.34 304 2.461 268.3C-.8205 260.4-.8205 251.6 2.461 243.7C17.34 207.1 48.62 156 95.42 112.6V112.6zM288 80C222.8 80 169.2 109.6 128.1 147.7C89.6 183.5 63.02 225.1 49.44 256C63.02 286 89.6 328.5 128.1 364.3C169.2 402.4 222.8 432 288 432C353.2 432 406.8 402.4 447.9 364.3C486.4 328.5 512.1 286 526.6 256C512.1 225.1 486.4 183.5 447.9 147.7C406.8 109.6 353.2 80 288 80V80z"/>
+                        </svg>
+                    </div>
+                    <label for="wifi-power">Power (dBm):</label>
+                    <select name="wifipower" id="wifi-power">
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                    </select>
+                    <button id="wifi-submit" type="submit">Update WiFI Settings</button>
+                </form>
+            </div>
+            <br>
+            <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+            <div class="board-locking header">
+                <svg viewBox="0 0 448 512" class="menu-firmware-icon">
+                    <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/>
+                </svg>
+                &nbsp;Board Locking
+            </div>
+            <div class="board-locking content">
+                <div class="bl-inactive">
+                    <span>This Feature is currently not activated!<br>Please set a WiFi-Password to activate this feature!</span>
+                </div>
+                <div class="bl-disabled">
+                    <span>The Board Locking Feature is currently disabled.</span>
+                    <button onclick="enableBoardLocking(true);">Enable locking</button>
+                </div>
+                <div class="bl-enabled">
+                    <span>Locking is enabled!<br>To lock the board, turn it on and off in less than 5 seconds.</span>
+                    <button onclick="enableBoardLocking(false);">Disable locking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Settings End -->
+    <!-- Board Stats -->
+    <div class="stats overlay">
+        <div class="closebtn" onClick="closeOverlay()">X</div>
+        <div class="wrapper">
+            <div class="wifi-settings header"><i class="fa-solid fa-chart-line"></i>&nbsp;Board Statistics</div>
+            <div class="stat-container">
+                <div><span class="owie-label">VOLTAGE</span></div>
+                <div class="stats-value"><span class="value-text">60.03</span><span class="owie-label value-label"> V</span></div>
+            </div>
+            <div class="stat-container">
+                <div><span class="owie-label">CURRENT</span></div>
+                <div class="stats-value"><span class="value-text">5</span><span class="owie-label value-label"> mAh</span></div>
+            </div>
+            <div class="stat-container">
+                <div><span class="owie-label">REGEN</span></div>
+                <div class="stats-value"><span class="value-text">2</span><span class="owie-label value-label"> mAh</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- Board Stats End -->
     <div id="nav" class="nav">
         <div class="nav-content">
             <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>
-            <a href="/settings"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>
+            <a href="#" onClick="openSettingsOverlay()"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>
             <a href="/wifi"><i class="fa-solid fa-wifi"></i> <span class="menu-text">Wifi Configuration</span></a>
             <a href="/monitor"><i class="fa-solid fa-terminal"></i> <span class="menu-text">Monitor BMS data</span></a>
             <a href="#" onClick="openFirmwareOverlay()">
-                <svg viewBox="0 0 448 512" class="menu-firmware-icon"><path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/></svg>
+                <svg viewBox="0 0 448 512" class="menu-firmware-icon">
+                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>
+                </svg>
                 <span class="menu-text">Firmware Update</span>
             </a>
-<!--            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>-->
+            <!--            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>-->
             <span class="owie-version">v1.4.0</span>
         </div>
     </div>
@@ -58,7 +152,9 @@
     </div>
     <div class="boardlocking-enabled">
         <div class="unlock-button">
-            <svg viewBox="0 0 448 512"><path d="M144 192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80V144C80 64.47 144.5 0 224 0C281.5 0 331 33.69 354.1 82.27C361.7 98.23 354.9 117.3 338.1 124.9C322.1 132.5 303.9 125.7 296.3 109.7C283.4 82.63 255.9 64 224 64C179.8 64 144 99.82 144 144L144 192z"/></svg>
+            <svg viewBox="0 0 448 512">
+                <path d="M144 192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80V144C80 64.47 144.5 0 224 0C281.5 0 331 33.69 354.1 82.27C361.7 98.23 354.9 117.3 338.1 124.9C322.1 132.5 303.9 125.7 296.3 109.7C283.4 82.63 255.9 64 224 64C179.8 64 144 99.82 144 144L144 192z"/>
+            </svg>
         </div>
         <div class="unlocking-text owie-label">Unlock Your Board</div>
     </div>
@@ -116,7 +212,7 @@
         </div>
     </div>
     <div class="owie-current">
-<!--        <div class="current-icon"><i class="fa-solid fa-bolt"></i></div>-->
+        <!--        <div class="current-icon"><i class="fa-solid fa-bolt"></i></div>-->
         <div class="current-content flex">
             <div>
 
@@ -134,17 +230,15 @@
                     </div>
                 </div>
                 <div class="current-text" style="margin-top: -38px;">
-                    <span class="value-text" >5.02</span><span class="owie-label value-label"> A</span>
+                    <span class="value-text">5.02</span><span class="owie-label value-label"> A</span>
                     <div class="current-header"><span class="owie-label">CURRENT</span></div>
                 </div>
 
 
             </div>
             <div class="voltage">
-
                 <div class="voltage-text">
                     <span class="value-text">60.03</span><span class="owie-label value-label"> V</span>
-
                 </div>
                 <div class="current-header"><span class="owie-label">VOLTAGE</span></div>
             </div>
@@ -152,59 +246,88 @@
         </div>
     </div>
     <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
-    <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY STATUS: <span class="battery-severity">OK</span></div>
+    <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY
+        STATUS: <span class="battery-severity">OK</span></div>
     <div class="battery-content">
         <div class="battery-info-content flex">
-                <div class="battery-pack">
-                    <!-- TODO: try to bring the battery into flex -->
-
-                    <div class="flex">
-                        <div class="cell">
-                            <div id="cell-1" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-2" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-3" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-4" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-5" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-6" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-7" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-8" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-9" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-10" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-11" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-12" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-13" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-14" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
-                        </div>
-                        <div class="cell">
-                            <div id="cell-15" class="gg-battery-empty"><div class="battery-voltage-text">4.10</div></div>
+            <div class="battery-pack">
+                <div class="flex">
+                    <div class="cell">
+                        <div id="cell-1" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
                         </div>
                     </div>
+                    <div class="cell">
+                        <div id="cell-2" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-3" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-4" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-5" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-6" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-7" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-8" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-9" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-10" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-11" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-12" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-13" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-14" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div id="cell-15" class="gg-battery-empty">
+                            <div class="battery-voltage-text">4.10</div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="temperatures">
                 <div class="flex" style="justify-content: center">
@@ -265,6 +388,28 @@
                 <span class="value-text">0</span><span class="owie-label value-label"> mAh</span>
             </div>
         </div>
+    </div>
+    <div class="navbar" id="myNavbar">
+        <!--        <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>-->
+        <a href="#" onClick="openSettingsOverlay()"><i class="fa-solid fa-sliders"></i>
+            <div class="menu-text">Settings</div>
+        </a>
+        <a href="#" onClick="openStatsOverlay()">
+            <svg viewBox="0 0 512 512" class="navbar-icon">
+                <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
+            </svg>
+            <div class="menu-text">Stats</div>
+        </a>
+        <a href="/monitor"><i class="fa-solid fa-terminal"></i>
+            <div class="menu-text">Monitor BMS data</div>
+        </a>
+        <a href="#" onClick="openFirmwareOverlay()">
+            <svg viewBox="0 0 448 512" class="navbar-icon">
+                <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>
+            </svg>
+            <div class="menu-text">Firmware Update</div>
+        </a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
 </div>
 

@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var uploadRouter = require('./routes/upgrade');
+var settingsRouter = require('./routes/settings');
 
 var app = express();
 
@@ -22,5 +23,6 @@ app.use(fileUpload({
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/upgrade', uploadRouter);
+app.use('/settings', settingsRouter);
 
 module.exports = app;
