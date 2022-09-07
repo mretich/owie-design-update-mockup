@@ -90,5 +90,5 @@ window.demo_iterate = function() {
 
 // attach to gui element
 window.setTimeout(function() {
-    document.getElementsByClassName("owie-name")[0].onclick = window.toggleDemoMode;
+    // document.getElementsByClassName("owie-name")[0].onclick = window.toggleDemoMode;
 }, 100);

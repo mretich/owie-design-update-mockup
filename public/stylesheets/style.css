@@ -1,15 +1,10 @@
+/* remove most of the browser presets and add defaults */
 html {
     font-family: sans-serif;
-    /* 1 */
     -ms-text-size-adjust: 100%;
-    /* 2 */
     -webkit-text-size-adjust: 100%;
-    /* 2 */
 }
 
-/**
- * Remove default margin.
- */
 body {
     margin: 0;
 }
@@ -18,16 +13,13 @@ body {
     box-sizing: inherit;
 }
 
+/* start owie css */
+
 html,
 body {
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
     height: 100%;
-}
-
-body {
-    font-size: 1.1em;
-    line-height: 1.5;
 }
 
 .flex {
@@ -110,6 +102,8 @@ body {
     font-family: Helvetica, sans-serif;
     font-size: 1em;
     color: #565656;
+    /*font-size: 1.1em;*/
+    line-height: 1.5;
 }
 
 body.owie-app {
@@ -449,46 +443,6 @@ body.owie-app {
     fill: #565656
 }
 
-/*COOL NAV*/
-.nav {
-    height: 100%;
-    width: 100%;
-    max-width: 650px;
-    background: whitesmoke;
-    position: absolute;
-    /* float: right; */
-    display: none;
-    z-index: 50;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    opacity: 0;
-}
-
-.nav-content {
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
-.nav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #565656;
-    display: block;
-    transition: 0.3s;
-}
-
-.nav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    /*font-size: 36px;*/
-    font-size: 3.1em;
-    margin-left: 50px;
-}
-
 @media screen and (max-height: 450px) {
     .nav {
         padding-top: 15px;
@@ -530,30 +484,17 @@ body.owie-app {
     }
 }
 
-.overlay {
-    height: 100%;
-    width: 100%;
-    max-width: 650px;
-    background: whitesmoke;
-    position: absolute;
-    /* float: right; */
+.content-container {
+    position: relative;
     display: none;
-    z-index: 50;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 20px;
-    opacity: 0;
+    margin-bottom: 20px;
+}
+.content-container .header {
+    margin-left: 5px;
 }
 
-.overlay .closebtn {
-    text-align: right;
-    font-weight: bold;
-    margin-right: 20px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 2em;
-    cursor: pointer;
+.home {
+    padding-top: 5px;
 }
 
 .upload-btn-wrapper {
@@ -791,19 +732,19 @@ body.owie-app {
 }
 
 /*TESTING UPLOAD*/
-.firmware.overlay .wrapper {
+#firmware .wrapper {
     width: inherit;
     margin-top: 60px;
     text-align: center;
 }
 
-.firmware.overlay .wrapper header {
+#firmware .wrapper header {
     font-size: 27px;
     font-weight: 600;
     text-align: center;
 }
 
-.firmware.overlay .wrapper form {
+#firmware .wrapper form {
     height: 167px;
     display: flex;
     cursor: pointer;
@@ -815,7 +756,7 @@ body.owie-app {
     border: 2px dashed;
 }
 
-.firmware.overlay .wrapper .update-upload-progress {
+#firmware .wrapper .update-upload-progress {
     height: 167px;
     display: block;
     cursor: pointer;
@@ -823,7 +764,7 @@ body.owie-app {
     align-items: center;
 }
 
-.firmware.overlay .wrapper .update-upload-progress .update-text {
+#firmware .wrapper .update-upload-progress .update-text {
     text-align: center;
 }
 
@@ -933,7 +874,6 @@ body.owie-app {
     margin-top: 35px;
     margin-left: 10px;
     margin-right: 10px;
-    width: 100%;
 }
 
 /*Form Testing*/
@@ -949,11 +889,11 @@ input[type=text], input[type=password], select {
 
 .wifi-pw-visibility {
     width: 20px;
-    position: fixed;
+    position: absolute;
     margin: 20px 0px 0px -29px;
 }
 
-.overlay button {
+.settings button {
     width: 100%;
     height: 40px;
     background-color: var(--bar-color);
@@ -962,10 +902,6 @@ input[type=text], input[type=password], select {
     font-size: inherit;
     border: 0px;
     border-radius: 2px;
-}
-
-.overlay .header {
-    margin-left: 0px;
 }
 
 [class^="bl-"] {
@@ -978,7 +914,7 @@ input[type=text], input[type=password], select {
 
 /* add new navbar BOTTOM*/
 .navbar {
-    background-color: #333;
+    background-color: var(--text-color);
     overflow: hidden;
     position: fixed;
     bottom: 0;
@@ -1001,6 +937,16 @@ input[type=text], input[type=password], select {
     font-size: 11px;
 }
 
+.navbar .owie-version {
+    color: var(--background-color);
+    text-align: center;
+    font-size: 11px;
+    margin-top: -10px;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
 /*!* Change the color of links on hover *!*/
 /*.navbar a:hover {*/
 /*    background-color: #ddd;*/
@@ -1019,7 +965,7 @@ input[type=text], input[type=password], select {
 }
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the navbar (.icon) */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 200px) {
     .navbar a:not(:first-child) {
         display: none;
     }
@@ -1028,10 +974,16 @@ input[type=text], input[type=password], select {
         float: right;
         display: block;
     }
+    .navbar .active {
+        display: block !important;
+    }
+    /*.navbar .active {*/
+    /*    display: block;*/
+    /*}*/
 }
 
 /* The "responsive" class is added to the navbar with JavaScript when the user clicks on the icon. This class makes the navbar look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 200px) {
     .navbar.responsive a.icon {
         position: absolute;
         right: 0;
@@ -1073,6 +1025,14 @@ input[type=text], input[type=password], select {
     }
 }
 
+.navbar.responsive .active {
+    display: block;
+}
+
+.navbar.responsive .active .menu-text{
+    display: contents;
+}
+
 .navbar svg path {
     fill: var(--background-color);
 }
@@ -1082,6 +1042,15 @@ input[type=text], input[type=password], select {
     margin-bottom: -5px;
 }
 
+.navbar .settings {
+    display:none;
+    justify-content: space-around;
+}
+.navbar .default {
+    display: flex;
+    justify-content: space-around;
+}
+
 /* END BOTTOM NAV */
 
 /* Test Stats List */
@@ -1089,7 +1058,6 @@ input[type=text], input[type=password], select {
     margin-top: 35px;
     margin-left: 10px;
     margin-right: 10px;
-    width: 100%;
 }
 
 .stat-container {
@@ -1102,10 +1070,12 @@ input[type=text], input[type=password], select {
     font-size: 0.8em;
     line-height: 1;
 }
+
 .stats-value {
     display: inline-block;
     white-space: nowrap;
 }
+
 .stats-value .value-text {
     font-size: 1.2em;
 }

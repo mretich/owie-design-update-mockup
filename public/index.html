@@ -17,8 +17,7 @@
         <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
         <div id="alert-msg" style='text-align:center'></div>
     </div>
-    <div class="firmware overlay">
-        <div class="closebtn" onClick="closeOverlay()">X</div>
+    <div id="firmware" class="firmware content-container">
         <div class="wrapper">
             <header>Firmware Update</header>
             <div>
@@ -47,8 +46,7 @@
         </div>
     </div>
     <!-- Settings -->
-    <div class="settings overlay">
-        <div class="closebtn" onClick="closeOverlay()">X</div>
+    <div id="settings" class="settings content-container">
         <div class="wrapper">
             <!--            <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>-->
             <div class="wifi-settings header">
@@ -109,309 +107,341 @@
     </div>
     <!-- Settings End -->
     <!-- Board Stats -->
-    <div class="stats overlay">
-        <div class="closebtn" onClick="closeOverlay()">X</div>
+    <div id="stats" class="stats content-container">
         <div class="wrapper">
             <div class="wifi-settings header"><i class="fa-solid fa-chart-line"></i>&nbsp;Board Statistics</div>
             <div class="stat-container">
                 <div><span class="owie-label">VOLTAGE</span></div>
-                <div class="stats-value"><span class="value-text">60.03</span><span class="owie-label value-label"> V</span></div>
+                <div class="stats-value"><span class="value-text">60.03</span><span
+                        class="owie-label value-label"> V</span></div>
             </div>
             <div class="stat-container">
                 <div><span class="owie-label">CURRENT</span></div>
-                <div class="stats-value"><span class="value-text">5</span><span class="owie-label value-label"> mAh</span></div>
+                <div class="stats-value"><span class="value-text">5</span><span
+                        class="owie-label value-label"> mAh</span></div>
             </div>
             <div class="stat-container">
                 <div><span class="owie-label">REGEN</span></div>
-                <div class="stats-value"><span class="value-text">2</span><span class="owie-label value-label"> mAh</span></div>
+                <div class="stats-value"><span class="value-text">2</span><span
+                        class="owie-label value-label"> mAh</span></div>
             </div>
         </div>
     </div>
     <!-- Board Stats End -->
-    <div id="nav" class="nav">
-        <div class="nav-content">
-            <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>
-            <a href="#" onClick="openSettingsOverlay()"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>
-            <a href="/wifi"><i class="fa-solid fa-wifi"></i> <span class="menu-text">Wifi Configuration</span></a>
-            <a href="/monitor"><i class="fa-solid fa-terminal"></i> <span class="menu-text">Monitor BMS data</span></a>
-            <a href="#" onClick="openFirmwareOverlay()">
-                <svg viewBox="0 0 448 512" class="menu-firmware-icon">
+    <!--    <div id="nav" class="nav">-->
+    <!--        <div class="nav-content">-->
+    <!--            <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>-->
+    <!--            <a href="#" onClick="openSettingsOverlay()"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>-->
+    <!--            <a href="/wifi"><i class="fa-solid fa-wifi"></i> <span class="menu-text">Wifi Configuration</span></a>-->
+    <!--            <a href="/monitor"><i class="fa-solid fa-terminal"></i> <span class="menu-text">Monitor BMS data</span></a>-->
+    <!--            <a href="#" onClick="openFirmwareOverlay()">-->
+    <!--                <svg viewBox="0 0 448 512" class="menu-firmware-icon">-->
+    <!--                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>-->
+    <!--                </svg>-->
+    <!--                <span class="menu-text">Firmware Update</span>-->
+    <!--            </a>-->
+    <!--            &lt;!&ndash;            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>&ndash;&gt;-->
+    <!--            <span class="owie-version">v1.4.0</span>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="header top two">-->
+    <!--        <div class="owie-name">-->
+    <!--            Owie-12345-->
+    <!--        </div>-->
+    <!--        <div class="menu" onclick="navOpen('1')">&#9776;</div>-->
+    <!--    </div>-->
+    <div id="home" class="home content-container">
+        <div class="boardlocking-enabled">
+            <div class="unlock-button">
+                <svg viewBox="0 0 448 512">
+                    <path d="M144 192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80V144C80 64.47 144.5 0 224 0C281.5 0 331 33.69 354.1 82.27C361.7 98.23 354.9 117.3 338.1 124.9C322.1 132.5 303.9 125.7 296.3 109.7C283.4 82.63 255.9 64 224 64C179.8 64 144 99.82 144 144L144 192z"/>
+                </svg>
+            </div>
+            <div class="unlocking-text owie-label">Unlock Your Board</div>
+        </div>
+        <div class="owie-loading-bars">
+            <!-- check if other possibilities... -->
+            <div class="progress owie">
+                <div class="progress-text flex">
+                    <div class="loading-name">Owie-12345</div>
+                    <div class="loading-percentage">%</div>
+                    <div class="loading-icon">
+                        <svg viewBox="0 0 576 512">
+                            <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
+                        </svg>
+                    </div>
+                    <div class="loading-icon hidden">
+                        <svg viewBox="0 0 384 512">
+                            <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="progress__bar" style="width: var(--owie-percentage)"></div>
+            </div>
+            <div class="loading-spacer"></div>
+            <div class="progress bms">
+                <div class="progress-text flex">
+                    <div class="loading-name">BMS</div>
+                    <div class="loading-percentage">%</div>
+                    <div class="loading-icon hidden">
+                        <svg viewBox="0 0 576 512">
+                            <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
+                        </svg>
+                    </div>
+                    <div class="loading-icon">
+                        <svg viewBox="0 0 384 512">
+                            <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="progress bms bar_overlay">
+                <div class="progress-text flex">
+                    <div class="loading-name">BMS</div>
+                    <div class="loading-percentage">%</div>
+                    <div class="loading-icon hidden">
+                        <svg viewBox="0 0 576 512">
+                            <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
+                        </svg>
+                    </div>
+                    <div class="loading-icon">
+                        <svg viewBox="0 0 384 512">
+                            <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owie-current">
+            <!--        <div class="current-icon"><i class="fa-solid fa-bolt"></i></div>-->
+            <div class="current-content flex">
+                <div>
+
+                    <div class="current-gauge">
+                        <div class="progress-gauge regen">
+                            <div class="barOverflow">
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="gauge-separator"></div>
+                        <div class="progress-gauge current">
+                            <div class="barOverflow">
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="current-text" style="margin-top: -38px;">
+                        <span class="value-text">5.02</span><span class="owie-label value-label"> A</span>
+                        <div class="current-header"><span class="owie-label">CURRENT</span></div>
+                    </div>
+
+
+                </div>
+                <div class="voltage">
+                    <div class="voltage-text">
+                        <span class="value-text">60.03</span><span class="owie-label value-label"> V</span>
+                    </div>
+                    <div class="current-header"><span class="owie-label">VOLTAGE</span></div>
+                </div>
+
+            </div>
+        </div>
+        <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+        <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY
+            STATUS: <span class="battery-severity">OK</span></div>
+        <div class="battery-content">
+            <div class="battery-info-content flex">
+                <div class="battery-pack">
+                    <div class="flex">
+                        <div class="cell">
+                            <div id="cell-1" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-2" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-3" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-4" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-5" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-6" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-7" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-8" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-9" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-10" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-11" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-12" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-13" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-14" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div id="cell-15" class="gg-battery-empty">
+                                <div class="battery-voltage-text">4.10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="temperatures">
+                    <div class="flex" style="justify-content: center">
+                        <div class="temp-item" id="temp-sensor1">
+                            <div class="temperature-gauge">
+                                <div class="temperature-gauge__bar" style="width: 80%;"></div>
+                            </div>
+                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                        </div>
+                        <div class="temp-item" id="temp-sensor2">
+                            <div class="temperature-gauge">
+                                <div class="temperature-gauge__bar" style="width: 30%"></div>
+                            </div>
+                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                        </div>
+                        <div class="temp-item" id="temp-sensor3">
+                            <div class="temperature-gauge">
+                                <div class="temperature-gauge__bar" style="width: 30%"></div>
+                            </div>
+                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                        </div>
+                        <div class="temp-item" id="temp-sensor4">
+                            <div class="temperature-gauge">
+                                <div class="temperature-gauge__bar" style="width: 30%"></div>
+                            </div>
+                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                        </div>
+                        <div class="temp-item" id="temp-sensor5">
+                            <div class="temperature-gauge">
+                                <div class="temperature-gauge__bar" style="width: 30%"></div>
+                            </div>
+                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+        <div class="session-statistics header"><i class="fa-solid fa-chart-line"></i>&nbsp;SESSION STATISTICS</div>
+        <div class="usage-statistics flex">
+            <div class="uptime">
+                <div class="statistics-header"><span class="owie-label">UPTIME</span></div>
+                <div class="statistics-text uptime">
+                    <span class="value-text">00:00</span>
+                </div>
+
+            </div>
+            <div class="usage">
+                <div class="statistics-header"><span class="owie-label">USAGE</span></div>
+                <div class="statistics-text usage">
+                    <span class="value-text">0</span><span class="owie-label value-label"> mAh</span>
+                </div>
+            </div>
+            <div class="regen">
+                <div class="statistics-header"><span class="owie-label">REGEN</span></div>
+                <div class="statistics-text regen">
+                    <span class="value-text">0</span><span class="owie-label value-label"> mAh</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar" id="navbar">
+        <div class="default active">
+            <a href="#home">
+                <svg viewBox="0 0 576 512" class="navbar-icon">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/>
+                </svg>
+                <div class="menu-text">Home</div>
+            </a>
+            <!--        <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>-->
+            <a href="#settings"><i class="fa-solid fa-sliders"></i>
+                <div class="menu-text">Settings</div>
+            </a>
+            <a href="#stats">
+                <svg viewBox="0 0 512 512" class="navbar-icon">
+                    <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
+                </svg>
+                <div class="menu-text">Stats</div>
+            </a>
+            <!--            <a href="#firmware">-->
+            <!--                <svg viewBox="0 0 448 512" class="navbar-icon">-->
+            <!--                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>-->
+            <!--                </svg>-->
+            <!--                <div class="menu-text">Firmware Update</div>-->
+            <!--            </a>-->
+            <a href="javascript:void(0);" class="icon" onclick="toggleResponsiveNav()">&#9776;</a>
+        </div>
+        <div class="settings">
+            <a href="#home">
+                <svg viewBox="0 0 576 512" class="navbar-icon">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/>
+                </svg>
+                <div class="menu-text">Home</div>
+            </a>
+            <a href="/monitor"><i class="fa-solid fa-terminal"></i>
+                <div class="menu-text">Monitor BMS data</div>
+            </a>
+            <a href="#firmware">
+                <svg viewBox="0 0 448 512" class="navbar-icon">
                     <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>
                 </svg>
-                <span class="menu-text">Firmware Update</span>
+                <div class="menu-text">Firmware Update</div>
             </a>
-            <!--            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>-->
-            <span class="owie-version">v1.4.0</span>
+            <a href="javascript:void(0);" class="icon" onclick="toggleResponsiveNav()">&#9776;</a>
         </div>
-    </div>
-    <div class="header top two">
-        <div class="owie-name">
-            Owie-12345
-        </div>
-        <div class="menu" onclick="navOpen('1')">&#9776;</div>
-    </div>
-    <div class="boardlocking-enabled">
-        <div class="unlock-button">
-            <svg viewBox="0 0 448 512">
-                <path d="M144 192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80V144C80 64.47 144.5 0 224 0C281.5 0 331 33.69 354.1 82.27C361.7 98.23 354.9 117.3 338.1 124.9C322.1 132.5 303.9 125.7 296.3 109.7C283.4 82.63 255.9 64 224 64C179.8 64 144 99.82 144 144L144 192z"/>
-            </svg>
-        </div>
-        <div class="unlocking-text owie-label">Unlock Your Board</div>
-    </div>
-    <div class="owie-loading-bars">
-        <!-- check if other possibilities... -->
-        <div class="progress owie">
-            <div class="progress-text flex">
-                <div class="loading-name">Owie</div>
-                <div class="loading-percentage">%</div>
-                <div class="loading-icon">
-                    <svg viewBox="0 0 576 512">
-                        <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
-                    </svg>
-                </div>
-                <div class="loading-icon hidden">
-                    <svg viewBox="0 0 384 512">
-                        <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="progress__bar" style="width: var(--owie-percentage)"></div>
-        </div>
-        <div class="loading-spacer"></div>
-        <div class="progress bms">
-            <div class="progress-text flex">
-                <div class="loading-name">BMS</div>
-                <div class="loading-percentage">%</div>
-                <div class="loading-icon hidden">
-                    <svg viewBox="0 0 576 512">
-                        <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
-                    </svg>
-                </div>
-                <div class="loading-icon">
-                    <svg viewBox="0 0 384 512">
-                        <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div class="progress bms bar_overlay">
-            <div class="progress-text flex">
-                <div class="loading-name">BMS</div>
-                <div class="loading-percentage">%</div>
-                <div class="loading-icon hidden">
-                    <svg viewBox="0 0 576 512">
-                        <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
-                    </svg>
-                </div>
-                <div class="loading-icon">
-                    <svg viewBox="0 0 384 512">
-                        <path d="M96 0C113.7 0 128 14.33 128 32V128H64V32C64 14.33 78.33 0 96 0zM288 0C305.7 0 320 14.33 320 32V128H256V32C256 14.33 270.3 0 288 0zM352 160C369.7 160 384 174.3 384 192C384 209.7 369.7 224 352 224V256C352 333.4 297 397.1 224 412.8V512H160V412.8C86.97 397.1 32 333.4 32 256V224C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H352z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="owie-current">
-        <!--        <div class="current-icon"><i class="fa-solid fa-bolt"></i></div>-->
-        <div class="current-content flex">
-            <div>
-
-                <div class="current-gauge">
-                    <div class="progress-gauge regen">
-                        <div class="barOverflow">
-                            <div class="bar"></div>
-                        </div>
-                    </div>
-                    <div class="gauge-separator"></div>
-                    <div class="progress-gauge current">
-                        <div class="barOverflow">
-                            <div class="bar"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="current-text" style="margin-top: -38px;">
-                    <span class="value-text">5.02</span><span class="owie-label value-label"> A</span>
-                    <div class="current-header"><span class="owie-label">CURRENT</span></div>
-                </div>
-
-
-            </div>
-            <div class="voltage">
-                <div class="voltage-text">
-                    <span class="value-text">60.03</span><span class="owie-label value-label"> V</span>
-                </div>
-                <div class="current-header"><span class="owie-label">VOLTAGE</span></div>
-            </div>
-
-        </div>
-    </div>
-    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
-    <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY
-        STATUS: <span class="battery-severity">OK</span></div>
-    <div class="battery-content">
-        <div class="battery-info-content flex">
-            <div class="battery-pack">
-                <div class="flex">
-                    <div class="cell">
-                        <div id="cell-1" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-2" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-3" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-4" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-5" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-6" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-7" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-8" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-9" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-10" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-11" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-12" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-13" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-14" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                    <div class="cell">
-                        <div id="cell-15" class="gg-battery-empty">
-                            <div class="battery-voltage-text">4.10</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="temperatures">
-                <div class="flex" style="justify-content: center">
-                    <div class="temp-item" id="temp-sensor1">
-                        <div class="temperature-gauge">
-                            <div class="temperature-gauge__bar" style="width: 80%;"></div>
-                        </div>
-                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
-                    </div>
-                    <div class="temp-item" id="temp-sensor2">
-                        <div class="temperature-gauge">
-                            <div class="temperature-gauge__bar" style="width: 30%"></div>
-                        </div>
-                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
-                    </div>
-                    <div class="temp-item" id="temp-sensor3">
-                        <div class="temperature-gauge">
-                            <div class="temperature-gauge__bar" style="width: 30%"></div>
-                        </div>
-                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
-                    </div>
-                    <div class="temp-item" id="temp-sensor4">
-                        <div class="temperature-gauge">
-                            <div class="temperature-gauge__bar" style="width: 30%"></div>
-                        </div>
-                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
-                    </div>
-                    <div class="temp-item" id="temp-sensor5">
-                        <div class="temperature-gauge">
-                            <div class="temperature-gauge__bar" style="width: 30%"></div>
-                        </div>
-                        <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
-    <div class="session-statistics header"><i class="fa-solid fa-chart-line"></i>&nbsp;SESSION STATISTICS</div>
-    <div class="usage-statistics flex">
-        <div class="uptime">
-            <div class="statistics-header"><span class="owie-label">UPTIME</span></div>
-            <div class="statistics-text uptime">
-                <span class="value-text">00:00</span>
-            </div>
-
-        </div>
-        <div class="usage">
-            <div class="statistics-header"><span class="owie-label">USAGE</span></div>
-            <div class="statistics-text usage">
-                <span class="value-text">0</span><span class="owie-label value-label"> mAh</span>
-            </div>
-        </div>
-        <div class="regen">
-            <div class="statistics-header"><span class="owie-label">REGEN</span></div>
-            <div class="statistics-text regen">
-                <span class="value-text">0</span><span class="owie-label value-label"> mAh</span>
-            </div>
-        </div>
-    </div>
-    <div class="navbar" id="myNavbar">
-        <!--        <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>-->
-        <a href="#" onClick="openSettingsOverlay()"><i class="fa-solid fa-sliders"></i>
-            <div class="menu-text">Settings</div>
-        </a>
-        <a href="#" onClick="openStatsOverlay()">
-            <svg viewBox="0 0 512 512" class="navbar-icon">
-                <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
-            </svg>
-            <div class="menu-text">Stats</div>
-        </a>
-        <a href="/monitor"><i class="fa-solid fa-terminal"></i>
-            <div class="menu-text">Monitor BMS data</div>
-        </a>
-        <a href="#" onClick="openFirmwareOverlay()">
-            <svg viewBox="0 0 448 512" class="navbar-icon">
-                <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>
-            </svg>
-            <div class="menu-text">Firmware Update</div>
-        </a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+        <div class="owie-version">Owie - 2.0.0</div>
     </div>
 </div>
-
+<script>Owie.test.log('Oidaaaaaa....')</script>
 </body>
+</html>
 
