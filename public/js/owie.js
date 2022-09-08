@@ -1,4 +1,3 @@
-// TODO: extract toaster/alerter calls to a separate function
 // TODO: create a function/class for updating the content via API / probably add stop/start functionality?
 //       (as discussed with Richard, we will make this as simple as possible by looping the properties and set them to the
 //        corresponding named classes in the DOM... except bar values, since they are set to the css variables and calculated via css)
@@ -7,6 +6,8 @@
 // TODO: move demo into backend
 // TODO: Where to put the OWIE name, since it doesnt look to good in the Progressbar (moving percentage if too long)
 // TODO: find another element to start DEMO Mode ;P
+// TODO: move firmwareupdate call to extra function.
+// TODO: add API Call for board locking ARMING!
 /**
  * Router Class (used for SPA Navigation)
  * @type {{checkRoute: Router.checkRoute, init: (function(): Router), routes: *[], removeRoute: (function(*): Router), addRoute: (function(*, *, *): Router), scopeDestroyTaskID: number, addRoutes: (function(*): Router), scopeDestroyTasks: *[], listener: null, onScopeDestroy: (function(*): Router)}}
@@ -176,8 +177,105 @@ Router.addRoutes([
     url: "firmware",
     callback:genericRouterController('firmware')
   },
+  {
+    name: "Monitor",
+    url: "monitor",
+    callback:genericRouterController('monitor', (state) => {
+      if (state === 'init') {
+        Monitoring.init();
+        Monitoring.connect();
+      } else {
+        Monitoring.stop()
+      }
+    })
+  },
 
 ])
+
+/**
+ * Monitoring class
+ */
+
+const Monitoring = {
+  packets: [],
+  lastError: '',
+  unknownData: '',
+  term: null,
+  button: null,
+  socket: null,
+  init: function () {
+    this.term = document.getElementById("term");
+    this.button = document.getElementById('startstop');
+  },
+  formatPacket: function (byteArray) {
+    let s = '';
+    byteArray.forEach((byte) => {
+      s += ('0' + byte.toString(16)).slice(-2);
+      s += ' ';
+    });
+    return s;
+  },
+
+  updateTerminal: function () {
+    let text = '';
+    for (let i = 0; i < this.packets.length; i++) {
+      text += this.packets[i] || '';
+      text += '\n';
+    }
+    this.term.value = (text + this.unknownData + this.lastError);
+  },
+
+  stop: function () {
+    this.socket.close();
+    this.socket = undefined;
+  },
+
+  connect: function () {
+    let _self = this;
+    this.socket = new WebSocket(`ws://${window.location.hostname}:3000/rawdata`);
+    this.socket.binaryType = "arraybuffer";
+    this.socket.onopen = function () {
+      _self.lastError = 'connected';
+      _self.updateTerminal();
+      _self.button.innerText = 'Stop';
+      _self.button.setAttribute('onclick', 'Monitoring.stop();');
+    }
+    this.socket.onclose = function () {
+      _self.lastError = 'disconnected';
+      _self.updateTerminal();
+      // Packets will get erased right after we reconnect.
+      _self.packets = [];
+      _self.unknownData = '';
+      _self.button.innerText = 'Connect';
+      _self.button.setAttribute('onclick', 'Monitoring.connect();');
+    }
+    this.socket.onmessage = function (event) {
+      if (!event.data instanceof ArrayBuffer) {
+        _self.lastError = "non-binary data";
+        _self.updateTerminal();
+        return;
+      }
+      const data = new Uint8Array(event.data);
+      if (data[0] == 0) {
+        _self.unknownData = `Unknown data: ${_self.formatPacket(data.slice(1))}\n`;
+        _self.updateTerminal();
+        return;
+      }
+      if (data.length < 4) {
+        _self.lastError = `data is too short, length = ${data.length}`;
+        _self.updateTerminal();
+        return;
+      }
+      _self.packets[data[3]] = _self.formatPacket(data);
+      _self.updateTerminal();
+    };
+
+    this.socket.onerror = function (error) {
+      _self.lastError = "websocket error";
+      _self.updateTerminal();
+    };
+  }
+}
 
 function toggleView (elementId, visible = true) {
   const overlay = document.getElementById(elementId);
@@ -192,17 +290,6 @@ function toggleView (elementId, visible = true) {
 
   }
 }
-//
-// function hideContent (className) {
-//   const overlay = document.querySelector(`.${className}`);
-//   overlays.forEach((overlay) => {
-//     console.log(overlay);
-//     overlay.style.opacity = "0";
-//     setTimeout(() => {
-//       overlay.style.display = "none"
-//     }, 1);
-//   })
-// }
 
 function areWeReady(fn) {
   if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -210,55 +297,6 @@ function areWeReady(fn) {
   } else {
     document.addEventListener("DOMContentLoaded", fn);
   }
-}
-
-//
-// const navOpen = (opVal) => {
-//     const nav = document.querySelector('.nav');
-//     nav.style.display = "flex";
-//     setTimeout(() => {
-//         nav.style.opacity = opVal
-//     }, 1);
-// }
-// const navClose = () => {
-//     const nav = document.querySelector('.nav');
-//     nav.style.opacity = "0";
-// }
-//
-// const openFirmwareOverlay = () => {
-//     navClose();
-//     const overlay = document.querySelector('.firmware.overlay');
-//     overlay.style.display = "flex";
-//     setTimeout(() => {
-//         overlay.style.opacity = "1"
-//     }, 1);
-// }
-const openSettingsOverlay = () => {
-    // navClose();
-    const overlay = document.querySelector('.settings.overlay');
-    overlay.style.display = "flex";
-    setTimeout(() => {
-        overlay.style.opacity = "1"
-    }, 1);
-}
-// const openStatsOverlay = () => {
-//     navClose();
-//     const overlay = document.querySelector('.stats.overlay');
-//     overlay.style.display = "flex";
-//     setTimeout(() => {
-//         overlay.style.opacity = "1"
-//     }, 1);
-// }
-const closeOverlay = () => {
-    const overlays = document.querySelectorAll('.overlay');
-    overlays.forEach((overlay) => {
-        console.log(overlay);
-        overlay.style.opacity = "0";
-        setTimeout(() => {
-            overlay.style.display = "none"
-        }, 1);
-    })
-
 }
 
 const toggleResponsiveNav = (forceClose = false) => {
@@ -277,48 +315,64 @@ const toggleWifiPwVisibility = () => {
 }
 
 /**
- * API Call to update the OWIE WiFI Settings
+ * API Call to update the OWIE WiFi Settings
  * @param e
  * @returns {boolean}
  */
 const updateWifiSettings = (e) => {
   if (e.preventDefault) e.preventDefault();
   let formData = document.querySelector("#wifi-settings")
-  let toaster = document.getElementById("toaster");
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/settings");
-  // TODO: call API and create toaster!
   xhr.onload = () => {
-    let countdown = 15;
-    // updateLoader.classList.add('hidden');
     if (xhr.status === 200) {
-      toaster.classList.add("success");
-      document.getElementById("alert-msg").innerHTML = "Update was successful!<br>OWIE is rebooting...";
-      toaster.classList.add("show");
-
-      // setInterval(() => {
-      //     if (countdown === 0) {
-      //         updateText.innerHTML = "Reloading OWIE..."
-      //         window.location.replace("/");
-      //         return;
-      //     }
-      //     updateText.innerHTML = `IMPORTANT: keep the board powered on until Owie Wi-Fi becomes available again!<br>Autoreload after ${countdown} seconds!`;
-      //     countdown--;
-      // }, 1000);
+      showAlerter("success",  "Update was successful!<br>OWIE is rebooting...");
     } else {
-      toaster.classList.remove("success");
-      document.getElementById("alert-msg").innerHTML = "Error!</span><br>" + xhr.status;
-      toaster.classList.add("show");
+      showAlerter("error",   "Error!</span><br>" + xhr.status);
     }
   }
   let data = new FormData(formData);
   xhr.send(data);
-  // You must return false to prevent the default form behavior
+  // We must return false to prevent the default form behavior
   return false;
-
 }
 
-const enableBoardLocking = (blenable) => {
+/**
+ * API call to unlock the board
+ */
+const disarmBoard = (btn) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "/lock?unlock");
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      // showAlerter("success","<span style='font-weight: 900'>Unlocked!</span><br>Restart your board to ride it.");
+      showAlerter("success","Successfully unlocked!<br>Please restart your Board!");
+      btn.parentElement.style.display = "none";
+    } else {
+      showAlerter("error", "<span style='font-weight: 900'>Error:</span><br>" + xhr.status);
+    }
+  };
+  xhr.send();
+}
+
+const showAlerter = (alertType, alertText, showClose=true) => {
+  const alerter = document.getElementById("toaster");
+  const alertMsg = document.getElementById("alert-msg");
+  // first hide an eventually open Alerter
+  alerter.classList.remove("show");
+  // now we clear the alerter classes
+  alerter.classList.remove("success", "error", "warning");
+  // add new class
+  alerter.classList.add(alertType);
+  // set text
+  alertMsg.innerHTML = alertText;
+  // unset close if needed
+  document.getElementById("toaster-close").style.display = showClose?"block":"none";
+  // show it now
+  alerter.classList.add("show");
+}
+
+const toggleArmingBoard= (blenable) => {
   // TODO: call API to enable/disable the feature
   if (blenable) {
     document.querySelector(".bl-enabled").classList.remove('hidden');
@@ -340,21 +394,12 @@ const toggleBatteryInfo = () => {
 }
 
 const onReady = () => {
-  Owie.router.init();
+  Router.init();
   console.log("DOM is available!");
-  // const nav = document.querySelector('.nav');
   const unlockButton = document.querySelector(".unlock-button");
   unlockButton.addEventListener('click', (e) => {
-    let toaster = document.getElementById("toaster");
-    toaster.classList.add("success");
-    document.getElementById("alert-msg").innerHTML = "Successfully unlocked!<br>Please restart your Board!";
-    toaster.classList.add("show");
-    unlockButton.parentElement.style.display = "none";
+    disarmBoard(unlockButton);
   })
-  // nav.addEventListener('transitionend', (e) => {
-  //   console.log('Transition ended', e, nav);
-  //   if (nav.style.opacity === '0') nav.style.display = 'none';
-  // });
 
   // firmware update section
   const updateForm = document.querySelector("#update-form"),
@@ -425,20 +470,20 @@ const onReady = () => {
  * This is the main class/function combining all logic
  *
  */
-const Owie = (function () {
-    function Test() {
-    }
-
-    //Initializer function. Call this to change listening for window changes.
-    // Router.init = function () {
-    //
-    // }
-    Test.log = (msg) => {
-      console.log(msg);
-    }
-    return {test: Test, router: Router}
-  }()
-);
+// const Owie = (function () {
+//     function Test() {
+//     }
+//
+//     //Initializer function. Call this to change listening for window changes.
+//     // Router.init = function () {
+//     //
+//     // }
+//     Test.log = (msg) => {
+//       console.log(msg);
+//     }
+//     return {test: Test, router: Router}
+//   }()
+// );
 areWeReady(onReady);
 
 
