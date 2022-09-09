@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <title>Owie - Status</title>
-    <link rel="stylesheet" href="/stylesheets/solid.css">
-    <link rel="stylesheet" href="/stylesheets/fontawesome.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <script src="js/owie.js"></script>
     <script src="js/demo.js"></script>
@@ -50,16 +48,15 @@
         <div class="wrapper">
             <!--            <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>-->
             <div class="wifi-settings header">
-                <svg viewBox="0 0 640 512" class="menu-firmware-icon">
+                <svg viewBox="0 0 640 512" class="content-icon">
                     <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
                 </svg>
-                <!--            <i class="fa-solid fa-battery-full"></i>-->
                 &nbsp;WiFi Settings
             </div>
             <div>
                 <form action="#" id="wifi-settings">
                     <label for="wifi">Owie WiFi network name override:</label>
-                    <input type="text" id="wifi" name="apselfname" placeholder="WiFi Name">
+                    <input type="text" name="apselfname" placeholder="WiFi Name">
                     <label>WiFi Password</label>
                     <div>
                         <input name="pw" id="wifipw" type="password">
@@ -85,7 +82,7 @@
             <br>
             <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
             <div class="board-locking header">
-                <svg viewBox="0 0 448 512" class="menu-firmware-icon">
+                <svg viewBox="0 0 448 512" class="content-icon">
                     <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/>
                 </svg>
                 &nbsp;Board Locking
@@ -109,7 +106,12 @@
     <!-- Owie Stats -->
     <div id="stats" class="stats content-container">
         <div class="wrapper">
-            <div class="wifi-settings header"><i class="fa-solid fa-chart-line"></i>&nbsp;Owie Statistics</div>
+            <div class="wifi-settings header">
+                <svg viewBox="0 0 512 512" class="content-icon">
+                    <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
+                </svg>
+               &nbsp;Owie Statistics
+            </div>
             <div class="stat-container">
                 <div><span class="owie-label">VOLTAGE</span></div>
                 <div class="stats-value"><span class="value-text">60.03</span><span
@@ -131,39 +133,63 @@
     <!-- Monitoring -->
     <div id="monitor" class="monitor content-container">
         <div class="wrapper">
-            <div class="wifi-settings header"><i class="fa-solid fa-terminal"></i>&nbsp;BMS Data Monitor</div>
+            <div class="wifi-settings header">
+                <svg viewBox="0 0 640 512" class="content-icon">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path d="M41.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 41.4 86.6zM288 416H576c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
+                </svg>
+                &nbsp;BMS Data Monitor
+            </div>
             <textarea readonly="1" id="term" cols="340" name="t1" wrap="off"></textarea>
             <button id="startstop" onclick="Monitoring.connect();">Connect</button>
             <div>
-                <span class="owie-label">Hier kommt der Table der Fehler...</span>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <th>Period</th>
+                        <th>Deviation</th>
+                        <th>Count</th>
+                    </tr>
+                    <tr>
+                        <th>Unknown Bytes</th>
+                        <th>Checksum Mismatches</th>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     <!-- Monitoring End -->
-
-
-    <!--    <div id="nav" class="nav">-->
-    <!--        <div class="nav-content">-->
-    <!--            <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>-->
-    <!--            <a href="#" onClick="openSettingsOverlay()"><i class="fa-solid fa-sliders"></i> <span class="menu-text">Settings</span></a>-->
-    <!--            <a href="/wifi"><i class="fa-solid fa-wifi"></i> <span class="menu-text">Wifi Configuration</span></a>-->
-    <!--            <a href="/monitor"><i class="fa-solid fa-terminal"></i> <span class="menu-text">Monitor BMS data</span></a>-->
-    <!--            <a href="#" onClick="openFirmwareOverlay()">-->
-    <!--                <svg viewBox="0 0 448 512" class="menu-firmware-icon">-->
-    <!--                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>-->
-    <!--                </svg>-->
-    <!--                <span class="menu-text">Firmware Update</span>-->
-    <!--            </a>-->
-    <!--            &lt;!&ndash;            <a href="/update"><i class="fa-solid fa-arrow-up-from-bracket"></i> <span class="menu-text">Firmware Update</span></a>&ndash;&gt;-->
-    <!--            <span class="owie-version">v1.4.0</span>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--    <div class="header top two">-->
-    <!--        <div class="owie-name">-->
-    <!--            Owie-12345-->
-    <!--        </div>-->
-    <!--        <div class="menu" onclick="navOpen('1')">&#9776;</div>-->
-    <!--    </div>-->
+    <!-- Dev WiFi Setting -->
+    <div id="wifi" class="dev-wifi content-container">
+        <div class="wrapper">
+            <div class="wifi-settings header">
+                <svg viewBox="0 0 640 512" class="content-icon">
+                    <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
+                </svg>
+                WiFi (Development)
+            </div>
+            <form action="#" id="wifi-dev">
+                <label for="wifi-dev-name">WiFi Network to connect to:</label>
+                <input type="text" id="wifi-dev-name" name="s" placeholder="WiFi Network">
+                <label>WiFi Password</label>
+                <div>
+                    <input name="p" id="wifi-de-pw" type="password">
+                    <svg viewBox="0 0 576 512" onclick="toggleWifiDevPwVisibility(this)" class="wifi-pw-visibility"
+                         style=" width: 20px;">
+                        <path d="M160 256C160 185.3 217.3 128 288 128C358.7 128 416 185.3 416 256C416 326.7 358.7 384 288 384C217.3 384 160 326.7 160 256zM288 336C332.2 336 368 300.2 368 256C368 211.8 332.2 176 288 176C287.3 176 286.7 176 285.1 176C287.3 181.1 288 186.5 288 192C288 227.3 259.3 256 224 256C218.5 256 213.1 255.3 208 253.1C208 254.7 208 255.3 208 255.1C208 300.2 243.8 336 288 336L288 336zM95.42 112.6C142.5 68.84 207.2 32 288 32C368.8 32 433.5 68.84 480.6 112.6C527.4 156 558.7 207.1 573.5 243.7C576.8 251.6 576.8 260.4 573.5 268.3C558.7 304 527.4 355.1 480.6 399.4C433.5 443.2 368.8 480 288 480C207.2 480 142.5 443.2 95.42 399.4C48.62 355.1 17.34 304 2.461 268.3C-.8205 260.4-.8205 251.6 2.461 243.7C17.34 207.1 48.62 156 95.42 112.6V112.6zM288 80C222.8 80 169.2 109.6 128.1 147.7C89.6 183.5 63.02 225.1 49.44 256C63.02 286 89.6 328.5 128.1 364.3C169.2 402.4 222.8 432 288 432C353.2 432 406.8 402.4 447.9 364.3C486.4 328.5 512.1 286 526.6 256C512.1 225.1 486.4 183.5 447.9 147.7C406.8 109.6 353.2 80 288 80V80z"/>
+                    </svg>
+                </div>
+                <button id="wifi-dev-submit" type="submit">Update WiFi</button>
+            </form>
+        </div>
+    </div>
+    <!-- Dev WiFi Setting End -->
     <div id="home" class="home content-container">
         <div class="boardlocking-enabled">
             <div class="unlock-button">
@@ -227,10 +253,8 @@
             </div>
         </div>
         <div class="owie-current">
-            <!--        <div class="current-icon"><i class="fa-solid fa-bolt"></i></div>-->
             <div class="current-content flex">
                 <div>
-
                     <div class="current-gauge">
                         <div class="progress-gauge regen">
                             <div class="barOverflow">
@@ -261,8 +285,12 @@
             </div>
         </div>
         <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
-        <div onclick="toggleBatteryInfo()" class="battery-statistics header"><i class="fa-solid fa-battery-full"></i>&nbsp;BATTERY
-            STATUS: <span class="battery-severity">OK</span></div>
+        <div onclick="toggleBatteryInfo()" class="battery-statistics header">
+            <svg viewBox="0 0 576 512" class="content-icon">
+                <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
+            </svg>
+            &nbsp;BATTERY STATUS: <span class="battery-severity">OK</span>
+        </div>
         <div class="battery-content">
             <div class="battery-info-content flex">
                 <div class="battery-pack">
@@ -382,7 +410,13 @@
 
         </div>
         <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
-        <div class="session-statistics header"><i class="fa-solid fa-chart-line"></i>&nbsp;SESSION STATISTICS</div>
+        <div class="session-statistics header">
+            <svg viewBox="0 0 512 512" class="content-icon">
+                <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
+            </svg>
+            &nbsp;SESSION STATISTICS
+        </div>
         <div class="usage-statistics flex">
             <div class="uptime">
                 <div class="statistics-header"><span class="owie-label">UPTIME</span></div>
@@ -416,7 +450,12 @@
                 <div class="menu-text">Home</div>
             </a>
             <!--        <a href="javascript:void(0)" class="closebtn" onclick="document.getElementById('nav').style.opacity = '0'">&times;</a>-->
-            <a href="#settings"><i class="fa-solid fa-sliders"></i>
+            <a href="#settings">
+                <svg viewBox="0 0 512 512" class="navbar-icon">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path d="M0 416c0-17.7 14.3-32 32-32l54.7 0c12.3-28.3 40.5-48 73.3-48s61 19.7 73.3 48L480 384c17.7 0 32 14.3 32 32s-14.3 32-32 32l-246.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 448c-17.7 0-32-14.3-32-32zm192 0c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zM384 256c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32zm-32-80c32.8 0 61 19.7 73.3 48l54.7 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-54.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l246.7 0c12.3-28.3 40.5-48 73.3-48zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm73.3 0L480 64c17.7 0 32 14.3 32 32s-14.3 32-32 32l-214.7 0c-12.3 28.3-40.5 48-73.3 48s-61-19.7-73.3-48L32 128C14.3 128 0 113.7 0 96S14.3 64 32 64l86.7 0C131 35.7 159.2 16 192 16s61 19.7 73.3 48z"/>
+                </svg>
+
                 <div class="menu-text">Settings</div>
             </a>
             <a href="#stats">
@@ -425,12 +464,6 @@
                 </svg>
                 <div class="menu-text">Stats</div>
             </a>
-            <!--            <a href="#firmware">-->
-            <!--                <svg viewBox="0 0 448 512" class="navbar-icon">-->
-            <!--                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>-->
-            <!--                </svg>-->
-            <!--                <div class="menu-text">Firmware Update</div>-->
-            <!--            </a>-->
             <a href="javascript:void(0);" class="icon" onclick="toggleResponsiveNav()">&#9776;</a>
         </div>
         <div class="settings">
@@ -441,8 +474,18 @@
                 </svg>
                 <div class="menu-text">Home</div>
             </a>
-            <a href="#monitor"><i class="fa-solid fa-terminal"></i>
+            <a href="#monitor">
+                <svg viewBox="0 0 640 512" class="navbar-icon">
+                    <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path d="M41.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 41.4 86.6zM288 416H576c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
+                </svg>
                 <div class="menu-text">Monitor BMS data</div>
+            </a>
+            <a href="#wifi">
+                <svg viewBox="0 0 640 512" class="navbar-icon">
+                    <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
+                </svg>
+                <div class="menu-text">Wifi Configuration</div>
             </a>
             <a href="#firmware">
                 <svg viewBox="0 0 448 512" class="navbar-icon">

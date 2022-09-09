@@ -6,10 +6,8 @@ const fileUpload = require('express-fileupload');
 var app = express();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var uploadRouter = require('./routes/upgrade');
-var settingsRouter = require('./routes/settings');
-var lockRouter = require('./routes/lock');
+let genericPostRouter = require('./routes/genericPostApi');
+let genericGetRouter = require('./routes/genericGetApi');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,11 +19,9 @@ app.use(fileUpload({
   createParentPath: true
 }));
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/upgrade', uploadRouter);
-app.use('/settings', settingsRouter);
-app.use('/lock', lockRouter);
-
-
+app.use('/upgrade', genericPostRouter);
+app.use('/settings', genericPostRouter);
+app.use('/wifi', genericPostRouter);
+app.use('/lock', genericGetRouter);
 
 module.exports = app;

@@ -189,6 +189,11 @@ Router.addRoutes([
       }
     })
   },
+  {
+    name: "Development WiFi Connect",
+    url: "wifi",
+    callback:genericRouterController('wifi')
+  },
 
 ])
 
@@ -313,6 +318,11 @@ const toggleWifiPwVisibility = () => {
   const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
   password.setAttribute('type', type);
 }
+const toggleWifiDevPwVisibility = () => {
+  let password = document.querySelector("#wifi-de-pw");
+  const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+  password.setAttribute('type', type);
+}
 
 /**
  * API Call to update the OWIE WiFi Settings
@@ -327,6 +337,29 @@ const updateWifiSettings = (e) => {
   xhr.onload = () => {
     if (xhr.status === 200) {
       showAlerter("success",  "Update was successful!<br>OWIE is rebooting...");
+    } else {
+      showAlerter("error",   "Error!</span><br>" + xhr.status);
+    }
+  }
+  let data = new FormData(formData);
+  xhr.send(data);
+  // We must return false to prevent the default form behavior
+  return false;
+}
+
+/**
+ * API Call to update the OWIE WiFi Settings
+ * @param e
+ * @returns {boolean}
+ */
+const updateWifiDevSettings = (e) => {
+  if (e.preventDefault) e.preventDefault();
+  let formData = document.querySelector("#wifi-dev")
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/wifi");
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      showAlerter("success",  "WiFi Settings saved!<br>OWIE is rebooting...");
     } else {
       showAlerter("error",   "Error!</span><br>" + xhr.status);
     }
@@ -383,13 +416,12 @@ const toggleArmingBoard= (blenable) => {
   }
 }
 
-
 const toggleBatteryInfo = () => {
   const batInf = document.querySelector(".battery-content");
-  if (batInf.style.maxHeight) {
-    batInf.style.maxHeight = null;
+  if (!batInf.classList.contains("open")) {
+    batInf.classList.add("open");
   } else {
-    batInf.style.maxHeight = "100%";
+    batInf.classList.remove("open");
   }
 }
 
@@ -460,7 +492,15 @@ const onReady = () => {
   } else {
     wifiUpdateForm.addEventListener("submit", updateWifiSettings);
   }
+  // end settings WiFi update
 
+ // update Dev WiFi
+  const wifiDevUpdateForm = document.getElementById("wifi-dev");
+  if (wifiDevUpdateForm.attachEvent) {
+    wifiDevUpdateForm.attachEvent("submit", updateWifiDevSettings);
+  } else {
+    wifiDevUpdateForm.addEventListener("submit", updateWifiDevSettings);
+  }
   // end settings WiFi update
 }
 
