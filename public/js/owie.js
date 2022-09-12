@@ -417,11 +417,11 @@ const toggleArmingBoard= (blenable) => {
 }
 
 const toggleBatteryInfo = () => {
-  const batInf = document.querySelector(".battery-content");
-  if (!batInf.classList.contains("open")) {
-    batInf.classList.add("open");
+  const batHeader = document.querySelector(".battery-statistics");
+  if (!batHeader.classList.contains("open")) {
+    batHeader.classList.add("open");
   } else {
-    batInf.classList.remove("open");
+    batHeader.classList.remove("open");
   }
 }
 

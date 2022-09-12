@@ -597,17 +597,34 @@ body.owie-app {
     letter-spacing: 2px;
 }
 
+.battery-statistics.header .content-icon {
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.content-icon.chevron {
+    float: right;
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
 .battery-content {
     width: 100%;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    transition: max-height 0.5s ease-in-out;
 }
 
-.battery-content.open {
-     max-height: 100%;
-     transition: max-height 1s ease-in-out;
- }
+div.battery-statistics.open + div.battery-content {
+     max-height: 180px;
+     transition: max-height 0.5s ease-in-out;
+}
+
+div.battery-statistics.open > svg.content-icon.chevron {
+    transform: rotate(-180deg);
+}
 
 .battery-info-content {
     justify-content: center;
