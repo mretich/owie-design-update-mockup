@@ -15,34 +15,6 @@
         <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
         <div id="alert-msg" style='text-align:center'></div>
     </div>
-    <div id="firmware" class="firmware content-container">
-        <div class="wrapper">
-            <header>Firmware Update</header>
-            <div>
-                <div class="update-upload-progress hidden">
-                    <div class="lds-spinner">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                    <div class="update-text">File upload in progress... (0%)</div>
-                </div>
-                <form id="update-form" action="#">
-                    <input id="updInput" type="file" name="firmware" accept=".bin,.bin.gz" hidden>
-                    <p>Browse Firmware File (.bin, .bin.gz)</p>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- Settings -->
     <div id="settings" class="settings content-container">
         <div class="wrapper">
@@ -51,7 +23,7 @@
                 <svg viewBox="0 0 640 512" class="content-icon">
                     <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
                 </svg>
-                &nbsp;WiFi Settings
+                <span class="title">WiFi Settings</span>
             </div>
             <div>
                 <form action="#" id="wifi-settings">
@@ -85,7 +57,7 @@
                 <svg viewBox="0 0 448 512" class="content-icon">
                     <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/>
                 </svg>
-                &nbsp;Board Locking
+                <span class="title">Board Locking</span>
             </div>
             <div class="board-locking content">
                 <div class="bl-inactive">
@@ -100,6 +72,38 @@
                     <button onclick="toggleArmingBoard(false);">Disable locking</button>
                 </div>
             </div>
+            <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>
+            <div class="firmware header">
+                <svg viewBox="0 0 448 512" class="content-icon">
+                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>
+                </svg>
+                <span class="title">Firmware Update</span>
+            </div>
+            <div class="firmware content">
+                <div>
+                    <div class="update-upload-progress hidden">
+                        <div class="lds-spinner">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div class="update-text">File upload in progress... (0%)</div>
+                    </div>
+                    <form id="update-form" action="#">
+                        <input id="updInput" type="file" name="firmware" accept=".bin,.bin.gz" hidden>
+                        <p>Browse Firmware File (.bin, .bin.gz)</p>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Settings End -->
@@ -110,7 +114,7 @@
                 <svg viewBox="0 0 512 512" class="content-icon">
                     <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
                 </svg>
-               &nbsp;Owie Statistics
+                <span class="title">Owie Statistics</span>
             </div>
             <div class="stat-container">
                 <div><span class="owie-label">VOLTAGE</span></div>
@@ -138,7 +142,7 @@
                     <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path d="M41.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 41.4 86.6zM288 416H576c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
                 </svg>
-                &nbsp;BMS Data Monitor
+                <span class="title">BMS Data Monitor</span>
             </div>
             <textarea readonly="1" id="term" cols="340" name="t1" wrap="off"></textarea>
             <button id="startstop" onclick="Monitoring.connect();">Connect</button>
@@ -172,7 +176,7 @@
                 <svg viewBox="0 0 640 512" class="content-icon">
                     <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
                 </svg>
-                WiFi (Development)
+                <span class="title">WiFi (Development)</span>
             </div>
             <form action="#" id="wifi-dev">
                 <label for="wifi-dev-name">WiFi Network to connect to:</label>
@@ -289,8 +293,11 @@
             <svg viewBox="0 0 576 512" class="content-icon">
                 <path d="M448 320H96V192H448V320zM0 176C0 131.8 35.82 96 80 96H464C508.2 96 544 131.8 544 176V192C561.7 192 576 206.3 576 224V288C576 305.7 561.7 320 544 320V336C544 380.2 508.2 416 464 416H80C35.82 416 0 380.2 0 336V176zM80 160C71.16 160 64 167.2 64 176V336C64 344.8 71.16 352 80 352H464C472.8 352 480 344.8 480 336V176C480 167.2 472.8 160 464 160H80z"/>
             </svg>
-            &nbsp;BATTERY STATUS: <span class="battery-severity">OK</span>
-            <svg class="content-icon chevron"viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>
+            <span class="title">BATTERY STATUS: <span class="battery-severity">OK</span></span>
+            <svg class="content-icon chevron" viewBox="0 0 512 512">
+                <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
+            </svg>
         </div>
         <div class="battery-content">
             <div class="battery-info-content flex">
@@ -416,7 +423,7 @@
                 <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                 <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
             </svg>
-            &nbsp;SESSION STATISTICS
+            <span class="title">SESSION STATISTICS</span>
         </div>
         <div class="usage-statistics flex">
             <div class="uptime">
@@ -487,12 +494,6 @@
                     <path d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8c39.5-34.9 91.3-56 148.2-56zm64 160c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64z"/>
                 </svg>
                 <div class="menu-text">Wifi Configuration</div>
-            </a>
-            <a href="#firmware">
-                <svg viewBox="0 0 448 512" class="navbar-icon">
-                    <path d="M246.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 109.3V320c0 17.7 14.3 32 32 32s32-14.3 32-32V109.3l73.4 73.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-128-128zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 53 43 96 96 96H352c53 0 96-43 96-96V352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V352z"/>
-                </svg>
-                <div class="menu-text">Firmware Update</div>
             </a>
             <a href="javascript:void(0);" class="icon" onclick="toggleResponsiveNav()">&#9776;</a>
         </div>

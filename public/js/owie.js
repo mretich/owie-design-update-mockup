@@ -436,7 +436,7 @@ const onReady = () => {
   // firmware update section
   const updateForm = document.querySelector("#update-form"),
     fileInput = document.querySelector("#updInput"),
-    updateProgress = document.querySelector(".firmware .wrapper .update-upload-progress"),
+    updateProgress = document.querySelector(".firmware .update-upload-progress"),
     updateText = updateProgress.querySelector(".update-text"),
     updateLoader = updateProgress.querySelector(".lds-spinner");
 
@@ -457,7 +457,7 @@ const onReady = () => {
     });
     xhr.onload = () => {
       let countdown = 15;
-      // updateLoader.classList.add('hidden');
+      updateLoader.classList.add('hidden');
       if (xhr.status === 200) {
         toaster.classList.add("success");
         document.getElementById("alert-msg").innerHTML = "Update was successful!<br>OWIE is rebooting...";
@@ -510,20 +510,17 @@ const onReady = () => {
  * This is the main class/function combining all logic
  *
  */
-// const Owie = (function () {
-//     function Test() {
-//     }
-//
-//     //Initializer function. Call this to change listening for window changes.
-//     // Router.init = function () {
-//     //
-//     // }
-//     Test.log = (msg) => {
-//       console.log(msg);
-//     }
-//     return {test: Test, router: Router}
-//   }()
-// );
+const Owie = (function () {
+    function toggleDemo() {
+      window.toggleDemoMode();
+    }
+
+    return {
+      "toggleDemo": toggleDemo,
+      monitoring: Monitoring,
+      router: Router}
+  }()
+);
 areWeReady(onReady);
 
 

@@ -136,31 +136,22 @@ body.owie-app {
 }
 
 .header {
-    font-style: italic;
+    /*font-style: italic;*/
     font-size: 1.2em;
     font-weight: bold;
-    display: block;
+    display: flex;
     width: 100%;
-    margin-left: -10px;
-    margin-top: 5px;
+    /*margin-left: -10px;*/
+    /*margin-top: 5px;*/
+    flex: none;
 }
 
-.header.top {
-    display: inline-flex;
-    flex-flow: row;
-    justify-content: center;
-    align-items: center;
+.header .title {
+    margin-left: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
-.header.top > .menu {
-    font-size: 1.5em;
-    text-align: end;
-    margin-right: 5px;
-}
-
-.header > .owie-name {
-    padding-left: 18px;
-}
 
 .owie-loading-bars {
     padding: 0;
@@ -358,11 +349,6 @@ body.owie-app {
     align-items: center;
 }
 
-.session-statistics {
-    margin: 15px;
-    letter-spacing: 2px;
-}
-
 .footer {
     position: absolute;
     bottom: 0;
@@ -490,7 +476,8 @@ body.owie-app {
     margin-bottom: 20px;
 }
 .content-container .header {
-    margin-left: 5px;
+    margin: 5px 0px 5px 5px;
+    letter-spacing: 2px;
 }
 
 .home {
@@ -592,21 +579,17 @@ body.owie-app {
     fill: #565656;
 }
 
-.battery-statistics {
-    margin: 8px 15px 5px 18px;
-    letter-spacing: 2px;
-}
-
 .battery-statistics.header .content-icon {
     vertical-align: middle;
     display: inline-block;
     position: relative;
-    padding-bottom: 5px;
+    padding-bottom: 1px;
 }
 
 .content-icon.chevron {
-    float: right;
-    margin-right: 10px;
+    margin-left: auto;
+    margin-right: 15px;
+    margin-bottom: auto;
     transition: 0.5s;
 }
 
@@ -753,40 +736,35 @@ div.battery-statistics.open > svg.content-icon.chevron {
     margin-top: 5px;
 }
 
-/*TESTING UPLOAD*/
-#firmware .wrapper {
-    width: inherit;
-    margin-top: 60px;
-    text-align: center;
-}
-
-#firmware .wrapper header {
-    font-size: 27px;
-    font-weight: 600;
-    text-align: center;
-}
-
-#firmware .wrapper form {
-    height: 167px;
+.firmware form {
+    height: 40px;
     display: flex;
     cursor: pointer;
-    margin: 30px 20px;
+    /* margin: 30px 20px; */
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border-radius: 5px;
-    border: 2px dashed;
+    border-radius: 2px;
+    /* border: 2px dashed; */
+    font-weight: bold;
+    background-color: var(--bar-color);
+    /*height: 30px;*/
+    /*display: flex;*/
+    /*cursor: pointer;*/
+    /*margin: 30px 20px;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*flex-direction: column;*/
+    /*border-radius: 5px;*/
+    /*border: 2px dashed;*/
 }
 
-#firmware .wrapper .update-upload-progress {
+.firmware .update-upload-progress {
     height: 167px;
     display: block;
     cursor: pointer;
     margin: 30px 0;
     align-items: center;
-}
-
-#firmware .wrapper .update-upload-progress .update-text {
     text-align: center;
 }
 
@@ -886,6 +864,7 @@ div.battery-statistics.open > svg.content-icon.chevron {
 
 .content-icon {
     width: 22px;
+    flex: none;
 }
 
 .content-icon path {
@@ -1127,3 +1106,7 @@ input[type=text], input[type=password], select {
     border-radius: 2px;
 }
 /* WiFi End */
+
+.board-locking.content {
+    margin-bottom: 20px;
+}
