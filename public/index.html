@@ -15,7 +15,7 @@
         <span class="closebtn" id="toaster-close" onclick="this.parentElement.classList.remove('show');">&times;</span>
         <div id="alert-msg" style='text-align:center'></div>
     </div>
-    <!-- Settings -->
+    <!-- Settings container -->
     <div id="settings" class="settings content-container">
         <div class="wrapper">
             <!--            <div style="border: 1px solid #565656; width: 100%; opacity: 0.6;"></div>-->
@@ -98,10 +98,8 @@
                         </div>
                         <div class="update-text">File upload in progress... (0%)</div>
                     </div>
-                    <form id="update-form" action="#">
-                        <input id="updInput" type="file" name="firmware" accept=".bin,.bin.gz" hidden>
-                        <p>Browse Firmware File (.bin, .bin.gz)</p>
-                    </form>
+                    <input id="fwUpdInput" type="file" name="firmware" accept=".bin,.bin.gz" hidden>
+                    <button id="fwUpdBtn">Browse Firmware File (.bin, .bin.gz)</button>
                 </div>
             </div>
         </div>
@@ -487,7 +485,7 @@
                     <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path d="M41.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 41.4 86.6zM288 416H576c17.7 0 32 14.3 32 32s-14.3 32-32 32H288c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/>
                 </svg>
-                <div class="menu-text">Monitor BMS data</div>
+                <div class="menu-text">Monitor BMS</div>
             </a>
             <a href="#wifi">
                 <svg viewBox="0 0 640 512" class="navbar-icon">

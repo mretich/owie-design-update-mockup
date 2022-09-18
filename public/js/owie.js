@@ -173,11 +173,6 @@ Router.addRoutes([
     callback:genericRouterController('stats')
   },
   {
-    name: "Firmware Update",
-    url: "firmware",
-    callback:genericRouterController('firmware')
-  },
-  {
     name: "Monitor",
     url: "monitor",
     callback:genericRouterController('monitor', (state) => {
@@ -296,6 +291,37 @@ function toggleView (elementId, visible = true) {
   }
 }
 
+function callOwieApi (type, endpoint, data, cb) {
+  let xhr = new XMLHttpRequest(),
+      formData = null;
+  xhr.open(type, "/"+endpoint);
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      if (cb) {
+        cb();
+      }
+    } else {
+      showAlerter("error",   "Error!</span><br>" + xhr.status);
+    }
+  }
+  if (data) {
+    formData = new FormData(data);
+  }
+  xhr.send(formData);
+}
+
+function handleEmptyFormFields (form) {
+  let hasEmptyValues = false;
+  for (let i = 0, element; element = form.elements[i++];) {
+    element.classList.remove("required");
+    if (element.value === "" && element.type !== "submit") {
+      element.classList.add("required");
+      hasEmptyValues = true;
+    }
+  }
+  return hasEmptyValues
+}
+
 function areWeReady(fn) {
   if (document.readyState === "complete" || document.readyState === "interactive") {
     setTimeout(fn, 1);
@@ -331,18 +357,12 @@ const toggleWifiDevPwVisibility = () => {
  */
 const updateWifiSettings = (e) => {
   if (e.preventDefault) e.preventDefault();
-  let formData = document.querySelector("#wifi-settings")
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/settings");
-  xhr.onload = () => {
-    if (xhr.status === 200) {
-      showAlerter("success",  "Update was successful!<br>OWIE is rebooting...");
-    } else {
-      showAlerter("error",   "Error!</span><br>" + xhr.status);
-    }
-  }
-  let data = new FormData(formData);
-  xhr.send(data);
+  let form = document.querySelector("#wifi-settings");
+  // check for empty values, set error decoration and return if empty fields are found!
+  if (handleEmptyFormFields(form)) return false;
+  callOwieApi("POST", "settings", form , () =>{
+    showAlerter("success",  "Update was successful!<br>OWIE is rebooting...");
+  })
   // We must return false to prevent the default form behavior
   return false;
 }
@@ -354,18 +374,12 @@ const updateWifiSettings = (e) => {
  */
 const updateWifiDevSettings = (e) => {
   if (e.preventDefault) e.preventDefault();
-  let formData = document.querySelector("#wifi-dev")
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/wifi");
-  xhr.onload = () => {
-    if (xhr.status === 200) {
-      showAlerter("success",  "WiFi Settings saved!<br>OWIE is rebooting...");
-    } else {
-      showAlerter("error",   "Error!</span><br>" + xhr.status);
-    }
-  }
-  let data = new FormData(formData);
-  xhr.send(data);
+  let form = document.querySelector("#wifi-dev");
+  // check for empty values, set error decoration and return if empty fields are found!
+  if (handleEmptyFormFields(form)) return false;
+  callOwieApi("POST", "wifi", form, () =>{
+    showAlerter("success",  "WiFi Settings saved!<br>OWIE is rebooting...");
+  })
   // We must return false to prevent the default form behavior
   return false;
 }
@@ -374,18 +388,10 @@ const updateWifiDevSettings = (e) => {
  * API call to unlock the board
  */
 const disarmBoard = (btn) => {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "/lock?unlock");
-  xhr.onload = () => {
-    if (xhr.status === 200) {
-      // showAlerter("success","<span style='font-weight: 900'>Unlocked!</span><br>Restart your board to ride it.");
-      showAlerter("success","Successfully unlocked!<br>Please restart your Board!");
-      btn.parentElement.style.display = "none";
-    } else {
-      showAlerter("error", "<span style='font-weight: 900'>Error:</span><br>" + xhr.status);
-    }
-  };
-  xhr.send();
+  callOwieApi("GET", "lock?unlock", null, () => {
+    showAlerter("success","Successfully unlocked!<br>Please restart your Board!");
+    btn.parentElement.style.display = "none";
+  })
 }
 
 const showAlerter = (alertType, alertText, showClose=true) => {
@@ -406,7 +412,6 @@ const showAlerter = (alertType, alertText, showClose=true) => {
 }
 
 const toggleArmingBoard= (blenable) => {
-  // TODO: call API to enable/disable the feature
   if (blenable) {
     document.querySelector(".bl-enabled").classList.remove('hidden');
     document.querySelector(".bl-disabled").classList.add('hidden');
@@ -434,19 +439,30 @@ const onReady = () => {
   })
 
   // firmware update section
-  const updateForm = document.querySelector("#update-form"),
-    fileInput = document.querySelector("#updInput"),
-    updateProgress = document.querySelector(".firmware .update-upload-progress"),
-    updateText = updateProgress.querySelector(".update-text"),
-    updateLoader = updateProgress.querySelector(".lds-spinner");
+  const firmwareInput = document.getElementById("fwUpdInput");
+  const updateUpdateBtn = document.getElementById("fwUpdBtn");
+  updateUpdateBtn.addEventListener('click', (e) => {
+    firmwareInput.click();
+  })
 
-  updateForm.addEventListener("click", () => {
-    fileInput.click();
-  });
+  //  setting firmware update
+  firmwareInput.onchange = (event) => {
+    if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+      return;
+    }
+    const file = event.target.files[0];
+    const fileName = file.name;
 
-  fileInput.onchange = () => {
-    let toaster = document.getElementById("toaster");
-    let xhr = new XMLHttpRequest();
+    // only allow .bin || .bin.gz!
+    let re = /(\.bin|\.bin\.gz)$/gm;
+    if (!re.exec(fileName)) {
+      showAlerter("error","Only .bin or .bin.gz files are allowed!");
+      return false;
+    }
+    let xhr = new XMLHttpRequest(),
+        updateProgress = document.querySelector(".firmware .update-upload-progress"),
+        updateText = updateProgress.querySelector(".update-text"),
+        updateLoader = updateProgress.querySelector(".lds-spinner");
     xhr.open("POST", "/upgrade");
     xhr.upload.addEventListener("progress", ({loaded, total}) => {
       let fileLoaded = Math.floor((loaded / total) * 100);
@@ -459,10 +475,7 @@ const onReady = () => {
       let countdown = 15;
       updateLoader.classList.add('hidden');
       if (xhr.status === 200) {
-        toaster.classList.add("success");
-        document.getElementById("alert-msg").innerHTML = "Update was successful!<br>OWIE is rebooting...";
-        toaster.classList.add("show");
-
+        showAlerter("success", "Update was successful!<br>OWIE is rebooting...");
         setInterval(() => {
           if (countdown === 0) {
             updateText.innerHTML = "Reloading OWIE..."
@@ -473,14 +486,12 @@ const onReady = () => {
           countdown--;
         }, 1000);
       } else {
-        toaster.classList.remove("success");
-        document.getElementById("alert-msg").innerHTML = "Error!</span><br>" + xhr.status;
-        toaster.classList.add("show");
+        showAlerter("error", "Error!</span><br>" + xhr.status);
       }
     }
-    let data = new FormData(updateForm);
-    xhr.send(data);
-    updateForm.classList.add("hidden");
+    xhr.setRequestHeader('Content-Type', "application/octet-stream");
+    xhr.setRequestHeader('Content-Disposition', 'attachment; filename="' + fileName + '"');
+    xhr.send(file);
     updateProgress.classList.remove('hidden');
   }
   // end firmware update section

@@ -234,6 +234,10 @@ body.owie-app {
     height: 5px;
 }
 
+input.required {
+    border-color: red !important;
+}
+
 .owie-current {
     margin-top: 77px;
 }
@@ -514,6 +518,7 @@ body.owie-app {
     width: 100%;
     /* width: -webkit-fill-available; */
     margin: 0px;
+    min-height: 75px;
 }
 
 /* The close button */
