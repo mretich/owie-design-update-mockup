@@ -183,6 +183,10 @@ body.owie-app {
     color: lightgrey;
 }
 
+.progress.bms svg > path {
+    fill: lightgray;
+}
+
 .progress.bms.bar_overlay {
     color: white;
     background-color: lightgrey;
@@ -196,6 +200,10 @@ body.owie-app {
     content: counter(prcnt);
 }
 
+.progress.bms.bar_overlay svg > path {
+    fill: white;
+}
+
 .progress.owie .progress__bar {
     background-color: var(--bar-color);
 }
@@ -204,26 +212,29 @@ body.owie-app {
     height: 50px;
     z-index: 3;
     flex-flow: row;
+    display: flex;
     font-size: 1.5em;
     padding-top: 7px;
 }
 
 .progress > .progress-text > div {
-    display: inline-block;
+    /*display: inline-block;*/
 }
 
-.progress > .progress-text > .loading-name {
-    margin-left: 10px
+.progress > .progress-text .loading-name {
+    white-space: nowrap;
 }
 
-.progress > .progress-text > .loading-percentage {
-    text-align: center;
+.progress > .progress-text .loading-percentage {
+    margin-right: auto;
+    padding-left: 5px;
 }
 
-.progress > .progress-text > .loading-icon {
+.progress > .progress-text .loading-icon {
     text-align: right;
-    margin-right: 10px;
+    margin-right: 5px;
     padding-top: 2px;
+    margin-left: auto;
 }
 
 .hidden {
@@ -602,12 +613,12 @@ input.required {
     width: 100%;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.5s ease-in-out;
+    /*transition: max-height 0.5s ease-in-out;*/
 }
 
 div.battery-statistics.open + div.battery-content {
-     max-height: 180px;
-     transition: max-height 0.5s ease-in-out;
+     max-height: 100%;
+     /*transition: max-height 0.5s ease-in-out;*/
 }
 
 div.battery-statistics.open > svg.content-icon.chevron {
@@ -1114,4 +1125,10 @@ input[type=text], input[type=password], select {
 
 .board-locking.content {
     margin-bottom: 20px;
+}
+
+.box {
+    flex: auto;
+    display: flex;
+    justify-content: center;
 }
