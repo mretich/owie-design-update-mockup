@@ -59,15 +59,15 @@
                 </svg>
                 <span class="title">Board Locking</span>
             </div>
-            <div class="board-locking content">
+            <div class="board-locking content" data-canenable="1" data-enabled="">
                 <div class="bl-inactive">
                     <span>This Feature is currently not activated!<br>Please set a WiFi-Password to activate this feature!</span>
                 </div>
-                <div class="bl-disabled">
-                    <span>The Board Locking Feature is currently disabled.</span>
+                <div class="bl-disabled hidden" >
+                    <span class="content">The Board Locking Feature is currently disabled.</span>
                     <button onclick="toggleArmingBoard(true);">Enable locking</button>
                 </div>
-                <div class="bl-enabled">
+                <div class="bl-enabled hidden">
                     <span>Locking is enabled!<br>To lock the board, turn it on and off in less than 5 seconds.</span>
                     <button onclick="toggleArmingBoard(false);">Disable locking</button>
                 </div>
@@ -115,21 +115,18 @@
                 <span class="title">Owie Statistics</span>
             </div>
             <div class="stat-container">
-                <div><span class="owie-label">VOLTAGE</span></div>
-                <div class="stats-value"><span class="value-text">60.03</span><span
-                        class="owie-label value-label"> V</span></div>
-            </div>
-            <div class="stat-container">
-                <div><span class="owie-label">CURRENT</span></div>
-                <div class="stats-value"><span class="value-text">5</span><span
-                        class="owie-label value-label"> mAh</span></div>
-            </div>
-            <div class="stat-container">
-                <div><span class="owie-label">REGEN</span></div>
-                <div class="stats-value"><span class="value-text">2</span><span
-                        class="owie-label value-label"> mAh</span></div>
+                <div><span class="owie-label">OWIE-VERSION</span></div>
+                <div class="stats-value"><span class="value-text">2.0.0</span><span
+                        class="owie-label value-label"></span></div>
             </div>
         </div>
+        <template id="stat-container-template">
+            <div class="stat-container">
+                <div><span class="owie-label"></span></div>
+                <div class="stats-value"><span class="value-text"></span><span
+                        class="owie-label value-label"></span></div>
+            </div>
+        </template>
     </div>
     <!-- Owie Stats End -->
     <!-- Monitoring -->
@@ -402,31 +399,31 @@
                             <div class="temperature-gauge">
                                 <div class="temperature-gauge__bar" style="width: 80%;"></div>
                             </div>
-                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                            <div><span class="value-text">40</span><span class="owie-label value-label">&#8451;</span></div>
                         </div>
                         <div class="temp-item" id="temp-sensor2">
                             <div class="temperature-gauge">
                                 <div class="temperature-gauge__bar" style="width: 30%"></div>
                             </div>
-                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                            <div><span class="value-text">40</span><span class="owie-label value-label">&#8451;</span></div>
                         </div>
                         <div class="temp-item" id="temp-sensor3">
                             <div class="temperature-gauge">
                                 <div class="temperature-gauge__bar" style="width: 30%"></div>
                             </div>
-                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                            <div><span class="value-text">40</span><span class="owie-label value-label">&#8451;</span></div>
                         </div>
                         <div class="temp-item" id="temp-sensor4">
                             <div class="temperature-gauge">
                                 <div class="temperature-gauge__bar" style="width: 30%"></div>
                             </div>
-                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                            <div><span class="value-text">40</span><span class="owie-label value-label">&#8451;</span></div>
                         </div>
                         <div class="temp-item" id="temp-sensor5">
                             <div class="temperature-gauge">
                                 <div class="temperature-gauge__bar" style="width: 30%"></div>
                             </div>
-                            <div class="value-text">40<span class="owie-label value-label">&#8451;</span></div>
+                            <div><span class="value-text">40</span><span class="owie-label value-label">&#8451;</span></div>
                         </div>
                     </div>
                 </div>

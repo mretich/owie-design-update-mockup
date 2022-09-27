@@ -1,13 +1,10 @@
-// TODO: create a function/class for updating the content via API / probably add stop/start functionality?
-//       (as discussed with Richard, we will make this as simple as possible by looping the properties and set them to the
-//        corresponding named classes in the DOM... except bar values, since they are set to the css variables and calculated via css)
 // TODO: add static metadata/initial value fetch (e.g.: fetching owie-version, owie-name initial progress values?...)
 //       (or we just use the old template system of the old owie web to set them statically to the html...)
-// TODO: move demo into backend
-// TODO: Where to put the OWIE name, since it doesnt look to good in the Progressbar (moving percentage if too long)
-// TODO: find another element to start DEMO Mode ;P
-// TODO: move firmwareupdate call to extra function.
-// TODO: add API Call for board locking ARMING!
+// TODO: maybe create the battery and temp html container via template, since the autoupdate will be called anyways...
+//       (as done in the stats...)
+// AUTOUPDATE is now implemented with demo mode.
+// Demo Mode starts polling /autoupdate endpoint every second
+
 /**
  * Router Class (used for SPA Navigation)
  * @type {{checkRoute: Router.checkRoute, init: (function(): Router), routes: *[], removeRoute: (function(*): Router), addRoute: (function(*, *, *): Router), scopeDestroyTaskID: number, addRoutes: (function(*): Router), scopeDestroyTasks: *[], listener: null, onScopeDestroy: (function(*): Router)}}
@@ -295,10 +292,10 @@ function callOwieApi (type, endpoint, data, cb) {
   let xhr = new XMLHttpRequest(),
       formData = null;
   xhr.open(type, "/"+endpoint);
-  xhr.onload = () => {
+  xhr.onload = (data, dat) => {
     if (xhr.status === 200) {
       if (cb) {
-        cb();
+        cb(xhr.response);
       }
     } else {
       showAlerter("error",   "Error!</span><br>" + xhr.status);
@@ -388,7 +385,7 @@ const updateWifiDevSettings = (e) => {
  * API call to unlock the board
  */
 const disarmBoard = (btn) => {
-  callOwieApi("GET", "lock?unlock", null, () => {
+  callOwieApi("GET", "lock?unlock", null, (data) => {
     showAlerter("success","Successfully unlocked!<br>Please restart your Board!");
     btn.parentElement.style.display = "none";
   })
@@ -411,14 +408,26 @@ const showAlerter = (alertType, alertText, showClose=true) => {
   alerter.classList.add("show");
 }
 
-const toggleArmingBoard= (blenable) => {
-  if (blenable) {
-    document.querySelector(".bl-enabled").classList.remove('hidden');
-    document.querySelector(".bl-disabled").classList.add('hidden');
+const updateBoardLockingButtons = function () {
+  const lockingContent = document.querySelector(".board-locking.content");
+  const contentDisabled = document.querySelector(".board-locking.content .bl-disabled")
+  const contentEnabled = document.querySelector(".board-locking.content .bl-enabled");
+  const isEnabled = !!lockingContent.dataset.enabled;
+  if (isEnabled) {
+    contentDisabled.classList.add('hidden');
+    contentEnabled.classList.remove('hidden');
   } else {
-    document.querySelector(".bl-disabled").classList.remove('hidden');
-    document.querySelector(".bl-enabled").classList.add('hidden');
+    contentDisabled.classList.remove('hidden');
+    contentEnabled.classList.add('hidden');
   }
+}
+
+const toggleArmingBoard = () => {
+    callOwieApi('GET', "lock?toggleArm", null, (data) => {
+      const lockingContent = document.querySelector(".board-locking.content");
+      lockingContent.dataset.enabled = data;
+      updateBoardLockingButtons();
+    })
 }
 
 const toggleBatteryInfo = () => {
@@ -432,7 +441,6 @@ const toggleBatteryInfo = () => {
 
 const onReady = () => {
   Router.init();
-  console.log("DOM is available!");
   const unlockButton = document.querySelector(".unlock-button");
   unlockButton.addEventListener('click', (e) => {
     disarmBoard(unlockButton);
@@ -513,8 +521,26 @@ const onReady = () => {
     wifiDevUpdateForm.addEventListener("submit", updateWifiDevSettings);
   }
   // end settings WiFi update
-}
 
+  // start handle board arming visibility
+  const lockingContent = document.querySelector(".board-locking.content");
+
+  if (lockingContent.dataset.canenable) {
+    const inactiveContent = document.querySelector(".board-locking.content .bl-inactive");
+    inactiveContent.classList.add('hidden');
+    updateBoardLockingButtons();
+  }
+  // end handle board armin visibility
+
+  // Set demo mode trigger
+  const demoModeTrigger = document.querySelector(".owie-version");
+  if (demoModeTrigger.attachEvent) {
+    demoModeTrigger.attachEvent("click", Owie.toggleDemo);
+  } else {
+    demoModeTrigger.addEventListener("click", Owie.toggleDemo);
+  }
+  // end demo mode trigger
+}
 
 /**
  * Owie class
@@ -529,7 +555,8 @@ const Owie = (function () {
     return {
       "toggleDemo": toggleDemo,
       monitoring: Monitoring,
-      router: Router}
+      router: Router
+    }
   }()
 );
 areWeReady(onReady);

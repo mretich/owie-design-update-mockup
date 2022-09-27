@@ -8,6 +8,7 @@ var app = express();
 var indexRouter = require('./routes/index');
 let genericPostRouter = require('./routes/genericPostApi');
 let genericGetRouter = require('./routes/genericGetApi');
+let autoupdateRouter = require('./routes/autoupdate');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -23,5 +24,7 @@ app.use('/upgrade', genericPostRouter);
 app.use('/settings', genericPostRouter);
 app.use('/wifi', genericPostRouter);
 app.use('/lock', genericGetRouter);
+app.use('/autoupdate', autoupdateRouter);
+
 
 module.exports = app;

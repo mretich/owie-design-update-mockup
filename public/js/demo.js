@@ -1,89 +1,94 @@
-
-window.toggleDemoMode = function() {
-    if (window.demo_intervalId) {
-        window.clearInterval(window.demo_intervalId);
-        delete window.demo_intervalId;
-        return;
-    }
-    window.demo_iterate();
-    window.demo_intervalId = window.setInterval(window.demo_iterate, 1000);
+let statsDomWritten = false;
+window.toggleDemoMode = function () {
+  if (window.demo_intervalId) {
+    window.clearInterval(window.demo_intervalId);
+    delete window.demo_intervalId;
+    return;
+  }
+  window.demo_iterate();
+  window.demo_intervalId = window.setInterval(window.demo_iterate, 1000);
 };
 
-window.demo_iterate = function() {
 
-    // fake uptime; based on first function call
-    window.demo_startTime = window.demo_startTime || Date.now();
-    window.demo_fakeUsage = window.demo_fakeUsage || {};
+window.demo_iterate = function () {
+  callOwieApi("GET", "autoupdate", null, (data) => {
+    if (data) {
+      let jsonData = JSON.parse(data);
 
-    let uptime = Math.floor((Date.now() - window.demo_startTime) / 1000),
-        s = uptime % 60,
-        m = (uptime % 3600 - s) / 60,
-        h = Math.floor(uptime / 3600),
-        prettyUptime = (h<1?'':h+':') + (m<10?'0'+m:m) + ':' + (s<10?'0'+s:s);
+      document.getElementsByClassName("uptime")[0].getElementsByClassName("value-text")[0].innerText = jsonData.uptime.value;
+      let style = document.getElementsByTagName("body")[0].style
+      let props = {
+        "--owie-percentage-int": jsonData.owie_percentage.value,
+        "--bms-percentage-int": jsonData.bms_percentage.value,
+        "--current": jsonData.current.value,
+      }
 
-    document.
-        getElementsByClassName("uptime")[0].
-            getElementsByClassName("value-text")[0].
-                innerText = prettyUptime;
-    //
-
-    let style = document.getElementsByTagName("body")[0].style
-
-    let maxCurrent = 15;
-    let minCurrent = -3;
-
-    let oldPercent = (style.getPropertyValue("--owie-percentage-int")||50);
-    let isRegen = (oldPercent == 0) || ((oldPercent < 100) && Math.random() >= 0.5);
-
-    let current = 0.1 * Math.floor(10 * Math.random() * (isRegen?minCurrent:maxCurrent));
-    let owiePercentage = Math.max(0, Math.min(100, oldPercent - Math.sign(current) * (Math.floor(Math.random() * 16))));
-    let bmsPercentage = Math.max(0, Math.min(100, Math.floor(owiePercentage * 0.9 + (Math.random() * 0.2 * owiePercentage))));
-
-
-    let props = {
-        "--owie-percentage-int": owiePercentage,
-        "--bms-percentage-int": bmsPercentage,
-        "--current": current,
-    }
-    for (const [key, value] of Object.entries(props)) {
+      for (const [key, value] of Object.entries(props)) {
         style.setProperty(key, value);
-    };
+      }
 
+      document.getElementsByClassName("current-text")[0].getElementsByClassName("value-text")[0].innerText =jsonData.current.value;
 
-    let currentText = current.toLocaleString(undefined, {maximumFractionDigits: 1, minimumFractionDigits: 1});
-    document.getElementsByClassName("current-text")[0].getElementsByClassName("value-text")[0].innerText = currentText;
+      document.getElementsByClassName("voltage-text")[0].getElementsByClassName("value-text")[0].innerText = jsonData.voltage.value;
 
-    let voltage = (15 * 2.6) + (0.01 * owiePercentage * 15 * (4.14 - 2.6));
-    let voltageText = voltage.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
-    document.getElementsByClassName("voltage-text")[0].getElementsByClassName("value-text")[0].innerText = voltageText;
-
-    let cellBase = (voltage / 15);
-    let restVolt = voltage;
-    let nCells = 0;
-
-    for (let c of document.getElementsByClassName("battery-voltage-text")) {
+      let nCells = 0;
+      for (let c of document.getElementsByClassName("battery-voltage-text")) {
+        let cellVolt = jsonData.battery_cells.value[nCells];
+        c.innerText = cellVolt;
         nCells++;
-        let cellVolt = (nCells == 15) ? restVolt : cellBase + (Math.random() > 0.95 ? 0.01 : 0.00);
-        restVolt = restVolt - cellVolt;
-        let cellText = cellVolt.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2})
-        c.innerText = cellText;
-    };
+      }
 
-    // fake mAh usage/regen, loosly based on fake current
-    let fakeUsage = Math.abs(current / 3.6)
-    let target = current < 0?"regen":"usage";
+      // NEED to calculate the percentage for progressbar
+      // min:0 max:60
+      let temps = 0;
+      for (let c of document.querySelectorAll(".temp-item")) {
+        let temp = jsonData.temperatures.value[temps];
+        let percentage = 100/60*temp;
+        let gaugeBar = c.querySelector('.temperature-gauge__bar');
+        let lbl = c.querySelector('.value-text');
+        gaugeBar.style.width = percentage + "%";
+        lbl.innerText = temp;
 
-    window.demo_fakeUsage[target] =
-       (window.demo_fakeUsage[target] || 0) + fakeUsage;
+        temps++;
+      }
 
-    let elem = document.
-        getElementsByClassName("usage-statistics")[0].
-            getElementsByClassName(target)[0].
-                getElementsByClassName("value-text")[0];
+      let usage = document.getElementsByClassName("usage-statistics")[0].getElementsByClassName("usage")[0].getElementsByClassName("value-text")[0];
+      let regen = document.getElementsByClassName("usage-statistics")[0].getElementsByClassName("regen")[0].getElementsByClassName("value-text")[0];
 
-    fakeUsage = Math.floor(window.demo_fakeUsage[target]);
+      if (usage.innerText != jsonData.usage.value) {
+        usage.innerText = jsonData.usage.value;
+      }
+      if (regen.innerText != jsonData.regen.value) {
+        regen.innerText = jsonData.regen.value;
+      }
 
-    if (elem.innerText != fakeUsage) {
-        elem.innerText =  fakeUsage; }
-    //
+      // generate and update the stats Page!
+      let statsContainer = document.querySelector('.stats.content-container .wrapper');
+      let template = document.getElementById("stat-container-template");
+
+      setTimeout(() => {
+        Object.entries(jsonData).forEach((entry) => {
+          const [key, item] = entry;
+          if (!Array.isArray(item.value)) {
+            item.value =  [item.value];
+          }
+          if (!statsDomWritten) {
+            item.value.forEach((value, idx) => {
+              let rowTpl = template.content.cloneNode(true) ;
+              rowTpl.firstElementChild.classList.add(`stats-${key}_${idx}`);
+              statsContainer.append(rowTpl);
+            })
+
+          }
+          item.value.forEach((value, idx) => {
+            let baseEl = document.getElementsByClassName(`stats-${key}_${idx}`)[0];
+            baseEl.querySelector('.owie-label').innerHTML = key.toUpperCase() + "&nbsp;" + ((item.value.length > 1)?idx:"");
+            baseEl.querySelector('.value-text').innerHTML = value;
+            baseEl.querySelector('.value-label').innerHTML = "&nbsp;" + item.unit;
+          });
+        });
+        statsDomWritten = true;
+      }, 0);
+    }
+  });
 };
